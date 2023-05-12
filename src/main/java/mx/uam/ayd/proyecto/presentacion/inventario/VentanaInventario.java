@@ -39,7 +39,6 @@ public class VentanaInventario extends JFrame {
 		JButton btnRegistra = new JButton("Registrar Producto");
 		btnRegistra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				log.info("Action Registra");
 				controlI.agregaProducto();
 			}
 		});
@@ -59,7 +58,6 @@ public class VentanaInventario extends JFrame {
 		JButton btnRegresa = new JButton("Regresar");
 		btnRegresa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				log.info("Action Regresa");
 				controlI.finalizaControlInventario();
 			}
 		});

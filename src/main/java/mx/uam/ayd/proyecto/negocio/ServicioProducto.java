@@ -31,12 +31,16 @@ public class ServicioProducto {
 	}
 	
 	public Producto agregaProducto(String nombre, String categoria, int cantidad, double precio, String descripcion) {
-		Producto producto = new Producto();
-		log.info("Producto por agregar: " + nombre);
+		if(productoRepository.findByNombre(nombre) != null) {
+			throw new IllegalArgumentException("El producto ya se encuentra en Inventario");
+		}
 		
 		if(categoriaRepository.findByNombre(categoria) == null) {
 			throw new IllegalArgumentException("La categoria dada, no es váslida");
 		}
+		log.info("Producto por agregar: " + nombre);
+		
+		Producto producto = new Producto();
 		producto.setNombre(nombre);
 		producto.setCategoria(categoria);
 		producto.setEnExistencia(cantidad);

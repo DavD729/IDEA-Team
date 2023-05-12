@@ -3,6 +3,7 @@ package mx.uam.ayd.proyecto.presentacion.agregarProducto;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -18,11 +19,9 @@ import javax.swing.border.EmptyBorder;
 
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
 import mx.uam.ayd.proyecto.negocio.modelo.Categoria;
 import mx.uam.ayd.proyecto.presentacion.agregarCategoria.ControlAgregarCategoria;
 
-@Slf4j
 @Component
 @SuppressWarnings("serial")
 public class VentanaAgregarProducto extends JFrame {
@@ -116,14 +115,14 @@ public class VentanaAgregarProducto extends JFrame {
 					if(textFieldCategoria.getText().toLowerCase().equals("categoria") || textFieldCategoria.getText().toLowerCase().equals("otra") || isTooLong(textFieldProducto, 60) || areNaN(textFieldCantidad, textFieldPrecio) || isNegative(textFieldCantidad) || isNegative(textFieldPrecio) || areaDescripcion.getText().length() >= 350) {
 						muestraErrorConMensaje("La información dada no es correcta, verifiquela");
 					} else {
-						if(muestraDialogoDeConfirmacion("El producto " + textFieldProducto.getText() + " está por ser registrado, ¿Desea continuar?") == 0) {
+						if(muestraDialogoDeConfirmacion(String.format("El producto %s con cantidad: %s, y Precio: %s, está por ser registrado en: %s, ¿Desea continuar?", textFieldProducto.getText(), textFieldCantidad.getText(), textFieldPrecio.getText(), textFieldCategoria.getText())) == 0) {
 							boolean flag = true;
 							if(((String)comboBoxCategoria.getSelectedItem()).toLowerCase().equals("otra")) {
 								flag = controlCat.registraCategoria(textFieldCategoria.getText());
 							}
 							if(flag) {
-								controlProd.registraProducto(textFieldProducto.getText(), textFieldCategoria.getText(), Integer.parseInt(textFieldCantidad.getText()), Double.parseDouble(textFieldPrecio.getText()), areaDescripcion.getText());
-								muestraDialogoConMensaje("El producto " + textFieldProducto.getText() + " ha sido registrado.", "Registro");
+								long ID = controlProd.registraProducto(textFieldProducto.getText(), textFieldCategoria.getText(), Integer.parseInt(textFieldCantidad.getText()), Double.parseDouble(textFieldPrecio.getText()), areaDescripcion.getText()).getIdProducto();
+								muestraDialogoConMensaje("El producto " + textFieldProducto.getText() + " ha sido registrado con ID: " + ID, "Registro");
 								controlProd.finaliza();
 							}
 						}
@@ -137,7 +136,6 @@ public class VentanaAgregarProducto extends JFrame {
 		JButton btnCancela = new JButton("Cancelar");
 		btnCancela.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				log.info("Action Cancela");
 				controlProd.finaliza();
 			}
 		});
@@ -155,12 +153,19 @@ public class VentanaAgregarProducto extends JFrame {
 		this.areaDescripcion.setText("");
 		
 		DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
-		categorias.forEach((cat) -> {
-			comboBoxModel.addElement(cat.getNombre());
-		});
+		this.preparaCategorias(comboBoxModel, Set.copyOf(categorias));
 		this.comboBoxCategoria.setModel(comboBoxModel);
 		
+		
 		this.setVisible(true);
+	}
+	
+	private void preparaCategorias(DefaultComboBoxModel<String> comboBox, Set<Categoria> categorias) {
+		comboBox.addElement("");
+		categorias.stream().filter(element -> element.getNombre().equals("otra")).forEach(categoria -> {
+			comboBox.addElement(categoria.getNombre());
+		});
+		comboBox.addElement("Otra");
 	}
 	
 	public int muestraDialogoDeConfirmacion(String mensaje) {
@@ -205,10 +210,9 @@ public class VentanaAgregarProducto extends JFrame {
 	}
 	
 	private boolean areEmpty(JTextField... campos) {
-		boolean flag = false;
 		for(JTextField campo : campos) {
-			flag = campo.getText().equals("");
+			if(campo.getText().equals("")) return true;
 		}
-		return flag;
+		return false;
 	}
 }

@@ -21,12 +21,4 @@ public class ControlInicio {
 	public void muestraContenidoInventario() {
 		controlInv.inicia();
 	}
-	
-	/**
-	 * Este apartado es para revisar si multiples ventanas estan abiertas, para cerrar al cambiar
-	 * WIP
-	 */
-	public void cambiaVentana() {
-		controlInv.checaVentanas();
-	}
 }

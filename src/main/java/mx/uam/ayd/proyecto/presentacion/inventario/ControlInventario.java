@@ -31,11 +31,6 @@ public class ControlInventario {
 	}
 	
 	public void finalizaControlInventario() {
-		ventanaI.setVisible(false);
-	}
-
-	public void checaVentanas() {
-		controlProducto.checaVentana();
-		if(ventanaI.isVisible()) ventanaI.setVisible(false);
+		ventanaI.dispose();
 	}
 }

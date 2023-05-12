@@ -39,6 +39,7 @@ public class TiendaAplicacion {
 		 * Se inicia la base de datos con una categoria de uso utilitario llamada "Otra".
 		 * Ésta categoría nos ayudará con el proceso de registro de productos
 		 */
+		
 		Categoria categoriaOtra = new Categoria();
 		categoriaOtra.setNombre("Otra");
 		categoriaRepositorio.save(categoriaOtra);

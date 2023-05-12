@@ -46,7 +46,6 @@ public class VentanaInicio extends JFrame {
 		JButton btnInventario = new JButton("Inventario");
 		btnInventario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				log.info("Action Inventario");
 				controlI.muestraContenidoInventario();
 			}
 		});
@@ -84,7 +83,7 @@ public class VentanaInicio extends JFrame {
 		btnCorteCaja.setBounds(15, 160, 178, 29);
 		panelContenido.add(btnCorteCaja);
 		
-		// Sección corte de caja
+		// Sección Administración
 		JButton btnAdministracion = new JButton("Administración");
 		btnAdministracion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

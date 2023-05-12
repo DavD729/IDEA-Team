@@ -30,7 +30,7 @@ public class Categoria {
 	
 	public boolean addCategoria(Categoria categoria) {
 		Objects.requireNonNull(categoria, "La categoria no puede ser nula");
-		if(categorias.contains(categoria) || categoria.getNombre() == "otra") return false;
+		if(categorias.contains(categoria)) return false;
 		return categorias.add(categoria);
 	}
 }

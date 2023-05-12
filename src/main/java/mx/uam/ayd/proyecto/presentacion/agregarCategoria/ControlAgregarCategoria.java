@@ -33,7 +33,7 @@ public class ControlAgregarCategoria {
 		try {
 			servicioCategoria.registraCategoria(nombre);
 		} catch(IllegalArgumentException e) {
-			ventanaProducto.muestraErrorConMensaje("Los argumentos de la categoria no son Validos, " + e.getMessage());
+			ventanaProducto.muestraErrorConMensaje("La categoria no puede ser creada, los argumentos no son Validos, " + e.getMessage());
 			return false;
 		}
 		return true;

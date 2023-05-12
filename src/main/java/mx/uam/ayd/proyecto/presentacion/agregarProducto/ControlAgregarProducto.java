@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import mx.uam.ayd.proyecto.negocio.ServicioCategoria;
 import mx.uam.ayd.proyecto.negocio.ServicioProducto;
 import mx.uam.ayd.proyecto.negocio.modelo.Categoria;
+import mx.uam.ayd.proyecto.negocio.modelo.Producto;
 import mx.uam.ayd.proyecto.presentacion.agregarCategoria.ControlAgregarCategoria;
 
 @Component
@@ -30,21 +31,19 @@ public class ControlAgregarProducto {
 		ventanaProducto.muestraVentana(this, controlCategoria, categorias);
 	}
 	
-	public void registraProducto(String nombre, String categoria, int cantidad, double precio, String descripcion) {
+	public Producto registraProducto(String nombre, String categoria, int cantidad, double precio, String descripcion) {
+		Producto registro = null;
 		try {
-			servicioProducto.agregaProducto(nombre, categoria, cantidad, precio, descripcion);
+			registro = servicioProducto.agregaProducto(nombre, categoria, cantidad, precio, descripcion);
 		} catch(IllegalArgumentException e) {
 			ventanaProducto.muestraErrorConMensaje("El producto no pudo ser registrado: " + e.getMessage());
 		}
 		
 		this.finaliza();
+		return registro;
 	}
 	
 	public void finaliza() {
-		ventanaProducto.setVisible(false);
-	}
-
-	public void checaVentana() {
-		//WIP
+		ventanaProducto.dispose();
 	}
 }
