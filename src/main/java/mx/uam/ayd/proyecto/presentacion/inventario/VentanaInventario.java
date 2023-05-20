@@ -63,6 +63,15 @@ public class VentanaInventario extends JFrame {
 		});
 		btnRegresa.setBounds(450, 420, 120, 29);
 		panelContenido.add(btnRegresa);
+		
+		JButton btnList = new JButton("DevList");
+		btnList.setBounds(450, 380, 120, 29);
+		btnList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controlI.listaProductos();
+			}
+		});
+		panelContenido.add(btnList);
 	}
 	
 	public void muestraContenido(ControlInventario control) {

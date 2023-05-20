@@ -3,9 +3,12 @@ package mx.uam.ayd.proyecto.presentacion.inventario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import mx.uam.ayd.proyecto.presentacion.agregarCategoria.ControlAgregarCategoria;
-import mx.uam.ayd.proyecto.presentacion.agregarProducto.ControlAgregarProducto;
+import lombok.extern.slf4j.Slf4j;
+import mx.uam.ayd.proyecto.negocio.ServicioProducto;
+import mx.uam.ayd.proyecto.presentacion.inventario.agregarCategoria.ControlAgregarCategoria;
+import mx.uam.ayd.proyecto.presentacion.inventario.agregarProducto.ControlAgregarProducto;
 
+@Slf4j
 @Component
 public class ControlInventario {
 	
@@ -14,6 +17,9 @@ public class ControlInventario {
 	
 	@Autowired
 	private ControlAgregarProducto controlProducto;
+	
+	@Autowired
+	private ServicioProducto servicioProducto;
 	
 	@Autowired
 	private VentanaInventario ventanaI;
@@ -28,6 +34,12 @@ public class ControlInventario {
 	
 	public void agregaProducto() {
 		controlProducto.inicio();
+	}
+	
+	public void listaProductos() {
+		servicioProducto.recuperaProductos().forEach(producto -> {
+			log.info(String.format("Producto: %s, con ID: %d", producto.getNombre(), producto.getIdProducto()));
+		});
 	}
 	
 	public void finalizaControlInventario() {

@@ -42,6 +42,26 @@ public class VentanaInicio extends JFrame {
 		etiqueta.setBounds(30, 5, 440, 16);
 		panelContenido.add(etiqueta);
 		
+		// Sección Administración
+		JButton btnAdministracion = new JButton("Administración");
+		btnAdministracion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controlI.muestraContenidoAdministracion();
+			}
+		});
+		btnAdministracion.setBounds(15, 40, 178, 29);
+		panelContenido.add(btnAdministracion);
+		
+		// Sección abastecimiento
+		JButton btnAbastecimiento = new JButton("Abastecimiento");
+		btnAbastecimiento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controlI.muestraContenidoAbastecimiento();
+			}
+		});
+		btnAbastecimiento.setBounds(15, 80, 178, 29);
+		panelContenido.add(btnAbastecimiento);
+		
 		// Sección inventario
 		JButton btnInventario = new JButton("Inventario");
 		btnInventario.addActionListener(new ActionListener() {
@@ -50,18 +70,8 @@ public class VentanaInicio extends JFrame {
 			}
 		});
 		
-		btnInventario.setBounds(15, 40, 178, 29);
+		btnInventario.setBounds(15, 120, 178, 29);
 		panelContenido.add(btnInventario);
-		
-		// Sección abastecimiento
-		JButton btnAbastecimiento = new JButton("Abastecimiento");
-		btnAbastecimiento.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				log.info("Action Abastecimiento");
-			}
-		});
-		btnAbastecimiento.setBounds(15, 80, 178, 29);
-		panelContenido.add(btnAbastecimiento);
 		
 		// Sección ventas
 		JButton btnVentas = new JButton("Ventas");
@@ -70,28 +80,18 @@ public class VentanaInicio extends JFrame {
 				log.info("Action Ventas");
 			}
 		});
-		btnVentas.setBounds(15, 120, 178, 29);
+		btnVentas.setBounds(15, 160, 178, 29);
 		panelContenido.add(btnVentas);
 		
 		// Sección corte de caja
 		JButton btnCorteCaja = new JButton("Corte de Caja");
 		btnCorteCaja.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				log.info("Action Corte de Caja");
+				controlI.muestraContenidoCorte();
 			}
 		});
-		btnCorteCaja.setBounds(15, 160, 178, 29);
+		btnCorteCaja.setBounds(15, 200, 178, 29);
 		panelContenido.add(btnCorteCaja);
-		
-		// Sección Administración
-		JButton btnAdministracion = new JButton("Administración");
-		btnAdministracion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				log.info("Action Administración");
-			}
-		});
-		btnAdministracion.setBounds(15, 200, 178, 29);
-		panelContenido.add(btnAdministracion);
 	}
 	
 	public void muestraVentana(ControlInicio control) {

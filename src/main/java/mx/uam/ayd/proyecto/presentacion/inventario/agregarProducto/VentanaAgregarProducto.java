@@ -1,4 +1,4 @@
-package mx.uam.ayd.proyecto.presentacion.agregarProducto;
+package mx.uam.ayd.proyecto.presentacion.inventario.agregarProducto;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +20,7 @@ import javax.swing.border.EmptyBorder;
 import org.springframework.stereotype.Component;
 
 import mx.uam.ayd.proyecto.negocio.modelo.Categoria;
-import mx.uam.ayd.proyecto.presentacion.agregarCategoria.ControlAgregarCategoria;
+import mx.uam.ayd.proyecto.presentacion.inventario.agregarCategoria.ControlAgregarCategoria;
 
 @Component
 @SuppressWarnings("serial")
@@ -162,7 +162,7 @@ public class VentanaAgregarProducto extends JFrame {
 	
 	private void preparaCategorias(DefaultComboBoxModel<String> comboBox, Set<Categoria> categorias) {
 		comboBox.addElement("");
-		categorias.stream().filter(element -> element.getNombre().equals("otra")).forEach(categoria -> {
+		categorias.stream().filter(element -> !element.getNombre().toLowerCase().equals("otra")).forEach(categoria -> {
 			comboBox.addElement(categoria.getNombre());
 		});
 		comboBox.addElement("Otra");

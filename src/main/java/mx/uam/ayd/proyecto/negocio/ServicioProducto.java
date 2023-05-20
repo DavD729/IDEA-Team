@@ -36,7 +36,7 @@ public class ServicioProducto {
 		}
 		
 		if(categoriaRepository.findByNombre(categoria) == null) {
-			throw new IllegalArgumentException("La categoria dada, no es váslida");
+			throw new IllegalArgumentException("La categoria dada, no es válida");
 		}
 		log.info("Producto por agregar: " + nombre);
 		
@@ -49,5 +49,45 @@ public class ServicioProducto {
 		
 		productoRepository.save(producto);
 		return producto;
+	}
+	
+	/**
+	 * Ian - Integration
+	 */
+	
+	private int numeroProductos;
+	
+	public Object[][] recuperaMatriz() {
+		List <Producto> lista = new ArrayList<>();
+		
+		for(Producto pro:productoRepository.findAll()) {
+			lista.add(pro);
+		}
+		
+		this.setNumeroProductos(lista.size());
+		
+		Object[][] matriz = new Object[lista.size()][3];
+
+		// Convertir lista de productos a una matriz
+		for (int fila = 0; fila < lista.size(); fila++) {
+			matriz[fila][0] = lista.get(fila).getNombre();
+			matriz[fila][1] = lista.get(fila).getEnExistencia();
+			matriz[fila][2] = lista.get(fila).getPrecio();
+		}
+		
+		return matriz;
+	}
+	
+	public void acualiza(List<Producto> lista) {
+		productoRepository.deleteAll();
+		productoRepository.saveAll(lista);	
+	}
+	
+	public int getNumeroProductos() {
+		return numeroProductos;
+	}
+	
+	public void setNumeroProductos(int numeroProductos) {
+		this.numeroProductos = numeroProductos;
 	}
 }

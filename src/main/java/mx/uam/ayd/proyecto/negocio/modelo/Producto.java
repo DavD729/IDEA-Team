@@ -11,6 +11,14 @@ import lombok.Data;
 @Data
 public class Producto {
 	
+	public Producto() {}
+	
+	public Producto(String nombre, float precio, int cantidad) {
+		this.nombre = nombre;
+		this.precio = precio;
+		this.enExistencia = cantidad;
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idProducto;

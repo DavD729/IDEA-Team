@@ -1,4 +1,4 @@
-package mx.uam.ayd.proyecto.presentacion.agregarProducto;
+package mx.uam.ayd.proyecto.presentacion.inventario.agregarProducto;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import mx.uam.ayd.proyecto.negocio.ServicioCategoria;
 import mx.uam.ayd.proyecto.negocio.ServicioProducto;
 import mx.uam.ayd.proyecto.negocio.modelo.Categoria;
 import mx.uam.ayd.proyecto.negocio.modelo.Producto;
-import mx.uam.ayd.proyecto.presentacion.agregarCategoria.ControlAgregarCategoria;
+import mx.uam.ayd.proyecto.presentacion.inventario.agregarCategoria.ControlAgregarCategoria;
 
 @Component
 public class ControlAgregarProducto {
