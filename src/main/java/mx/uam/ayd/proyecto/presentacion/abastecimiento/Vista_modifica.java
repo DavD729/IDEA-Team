@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.springframework.stereotype.Component;
 
@@ -33,6 +34,7 @@ public class Vista_modifica extends JFrame {
 	private JScrollPane scrollPane;
 	private Object[][] matriz;
 	private Control_vista control_vista;
+	private DefaultTableModel model;
 
 	/**
 	 * Create the frame.
@@ -176,8 +178,14 @@ public class Vista_modifica extends JFrame {
 	private void poblateData() {
 		this.matriz = control_vista.obtenMatriz();
 		
-	    table.setModel(new DefaultTableModel(matriz, new String[] { "Productos", "Cantidad", "Precio" }));
+		model = new DefaultTableModel(matriz, new String[] { "Productos", "Cantidad", "Precio" });
+		
+	    table.setModel(model);
 		table.setEnabled(false);
 		scrollPane.setViewportView(table);
+		
+		//Ese metodo sirve para ordenar los datos de la tabla
+		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+		table.setRowSorter(sorter);
 	}
 }
