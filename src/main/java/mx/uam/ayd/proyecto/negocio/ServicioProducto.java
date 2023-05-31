@@ -30,6 +30,24 @@ public class ServicioProducto {
 		return productos;
 	}
 	
+	public Object[][] recuperaTablaDeProductos(){
+		List<Producto> productos = new ArrayList<>();
+		productoRepository.findAll().forEach((producto) -> {
+			productos.add(producto);
+		});
+		
+		Object[][] matrizDeDatos = new Object[productos.size()][5];
+		for(int index = 0; index < productos.size(); index++) {
+			matrizDeDatos[index][0] = productos.get(index).getIdProducto();
+			matrizDeDatos[index][1] = productos.get(index).getNombre();
+			matrizDeDatos[index][2] = productos.get(index).getEnExistencia();
+			matrizDeDatos[index][3] = productos.get(index).getCategoria();
+			matrizDeDatos[index][4] = productos.get(index).getPrecio();
+		}
+		
+		return matrizDeDatos;
+	}
+	
 	public Producto agregaProducto(String nombre, String categoria, int cantidad, double precio, String descripcion) {
 		if(productoRepository.findByNombre(nombre) != null) {
 			throw new IllegalArgumentException("El producto ya se encuentra en Inventario");

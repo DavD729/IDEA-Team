@@ -35,7 +35,7 @@ public class VentanaInventario extends JFrame {
 		setContentPane(panelContenido);
 		panelContenido.setLayout(null);
 		
-		tablaInventario = new JTable(new DefaultTableModel(getDefaultData(), encabezados.toArray())) {
+		tablaInventario = new JTable() {
 			
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -82,14 +82,11 @@ public class VentanaInventario extends JFrame {
 	
 	public void muestraContenido(ControlInventario control) {
 		this.controlI = control;
+		this.updateTable();
 		this.setVisible(true);
 	}
 	
-	private Object[][] getDefaultData() {
-		return new String[][] {
-			{"Juan", "Pérez", "35"},
-			{"María", "Gómez", "28"},
-			{"Pedro", "López", "42"}
-		};
+	public void updateTable() {
+		this.tablaInventario.setModel(new DefaultTableModel(controlI.recuperaTablaProductos(), encabezados.toArray()));
 	}
 }
