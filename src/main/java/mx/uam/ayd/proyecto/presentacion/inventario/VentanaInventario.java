@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.springframework.stereotype.Component;
 
@@ -19,11 +20,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-@SuppressWarnings("serial")
+@SuppressWarnings("all")
 public class VentanaInventario extends JFrame {
 	private ControlInventario controlI;
 	private JPanel panelContenido;
 	private JTable tablaInventario;
+	private TableRowSorter reordenador;
 	private JScrollPane scrollTable;
 	private List<String> encabezados = List.of("ID", "Producto", "En Stock", "Categoria", "Precios");
 	
@@ -42,7 +44,8 @@ public class VentanaInventario extends JFrame {
 				return false;
 			}
 		};
-		
+		reordenador = new TableRowSorter<>(tablaInventario.getModel());
+		tablaInventario.setRowSorter(reordenador);
 		scrollTable = new JScrollPane(tablaInventario);
 		scrollTable.setBounds(30, 30, 625, 480);
 		panelContenido.add(scrollTable);
@@ -88,5 +91,7 @@ public class VentanaInventario extends JFrame {
 	
 	public void updateTable() {
 		this.tablaInventario.setModel(new DefaultTableModel(controlI.recuperaTablaProductos(), encabezados.toArray()));
+		reordenador = new TableRowSorter<>(tablaInventario.getModel());
+		tablaInventario.setRowSorter(reordenador);
 	}
 }
