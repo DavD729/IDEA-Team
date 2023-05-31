@@ -21,6 +21,11 @@ public class ServicioProducto {
 	@Autowired
 	CategoriaRepository categoriaRepository;
 	
+	/**
+	 * Devuelve una lista completa de los productos actuales registrados
+	 * 
+	 * @return Lista de Productos
+	 */
 	public List<Producto> recuperaProductos(){
 		List<Producto> productos = new ArrayList<>();
 		productoRepository.findAll().forEach((producto) -> {
@@ -30,6 +35,39 @@ public class ServicioProducto {
 		return productos;
 	}
 	
+	/**
+	 * Devuelve los datos de los productos registrados actuales en forma de Matriz
+	 * 
+	 * @return Matriz de datos
+	 */
+	public Object[][] recuperaTablaDeProductos(){
+		List<Producto> productos = new ArrayList<>();
+		productoRepository.findAll().forEach((producto) -> {
+			productos.add(producto);
+		});
+		
+		Object[][] matrizDeDatos = new Object[productos.size()][5];
+		for(int index = 0; index < productos.size(); index++) {
+			matrizDeDatos[index][0] = productos.get(index).getIdProducto();
+			matrizDeDatos[index][1] = productos.get(index).getNombre();
+			matrizDeDatos[index][2] = productos.get(index).getEnExistencia();
+			matrizDeDatos[index][3] = productos.get(index).getCategoria();
+			matrizDeDatos[index][4] = productos.get(index).getPrecio();
+		}
+		
+		return matrizDeDatos;
+	}
+	
+	/**
+	 * Proceso de registro de un producto nuevo hacia el inventario
+	 * 
+	 * @param nombre Nombre del producto a Registrar
+	 * @param categoria Categoria en la que estará registrada
+	 * @param cantidad Catidad de productos a ser registrados
+	 * @param precio Valor del producto
+	 * @param descripcion Información extra del producto
+	 * @return Producto registrado
+	 */
 	public Producto agregaProducto(String nombre, String categoria, int cantidad, double precio, String descripcion) {
 		if(productoRepository.findByNombre(nombre) != null) {
 			throw new IllegalArgumentException("El producto ya se encuentra en Inventario");

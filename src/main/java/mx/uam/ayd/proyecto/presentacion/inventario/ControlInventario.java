@@ -3,12 +3,10 @@ package mx.uam.ayd.proyecto.presentacion.inventario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
 import mx.uam.ayd.proyecto.negocio.ServicioProducto;
 import mx.uam.ayd.proyecto.presentacion.inventario.agregarCategoria.ControlAgregarCategoria;
 import mx.uam.ayd.proyecto.presentacion.inventario.agregarProducto.ControlAgregarProducto;
 
-@Slf4j
 @Component
 public class ControlInventario {
 	
@@ -36,10 +34,8 @@ public class ControlInventario {
 		controlProducto.inicio();
 	}
 	
-	public void listaProductos() {
-		servicioProducto.recuperaProductos().forEach(producto -> {
-			log.info(String.format("Producto: %s, con ID: %d", producto.getNombre(), producto.getIdProducto()));
-		});
+	public Object[][] recuperaTablaProductos() {
+		return servicioProducto.recuperaTablaDeProductos();
 	}
 	
 	public void finalizaControlInventario() {

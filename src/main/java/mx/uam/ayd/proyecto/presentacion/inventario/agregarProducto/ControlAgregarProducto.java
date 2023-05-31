@@ -9,10 +9,14 @@ import mx.uam.ayd.proyecto.negocio.ServicioCategoria;
 import mx.uam.ayd.proyecto.negocio.ServicioProducto;
 import mx.uam.ayd.proyecto.negocio.modelo.Categoria;
 import mx.uam.ayd.proyecto.negocio.modelo.Producto;
+import mx.uam.ayd.proyecto.presentacion.inventario.VentanaInventario;
 import mx.uam.ayd.proyecto.presentacion.inventario.agregarCategoria.ControlAgregarCategoria;
 
 @Component
 public class ControlAgregarProducto {
+	
+	@Autowired
+	private VentanaInventario ventanaInventario;
 	
 	@Autowired
 	private ControlAgregarCategoria controlCategoria;
@@ -45,5 +49,6 @@ public class ControlAgregarProducto {
 	
 	public void finaliza() {
 		ventanaProducto.dispose();
+		ventanaInventario.updateTable();
 	}
 }
