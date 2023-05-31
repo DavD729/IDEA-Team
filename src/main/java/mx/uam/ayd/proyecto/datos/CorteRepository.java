@@ -14,4 +14,6 @@ public interface CorteRepository extends CrudRepository <Corte, Long>{
 	 */
 	public Corte findByDate (LocalDate fecha);
 	
+	public Corte findByDateAndTipoOperacion (LocalDate fecha, int tipoOperacion);
+	
 }

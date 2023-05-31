@@ -19,16 +19,9 @@ public class ServicioVenta {
 
 	public List<Venta> recuperaVentas(LocalDate date) {
 		List<Venta> ventas = new ArrayList<>();
-		/*ventaRepository.findByDate(Fecha).forEach((venta) -> {
-		ventas.add(venta);});*/
 		ventas=(List<Venta>) ventaRepository.findByDate(date);
-		if(ventas==null) {
-			System.out.println("No se guardo nada");
-		}
-		else {
-			System.out.println(ventas.size());
-		}
 		return ventas;
 	}
 }
+
 
