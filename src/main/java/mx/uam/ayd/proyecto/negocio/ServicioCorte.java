@@ -18,7 +18,7 @@ public class ServicioCorte {
 	@Autowired
 	private CorteRepository corteRepository;
 	
-	public Corte sumaVentas(List<Venta> ventas) {
+	public Corte sumaVentas(List<Venta> ventas, LocalDate fecha, int tipoOperacion) {
 		Corte corte = new Corte();
 		corte.setEfectivo(0);
 		corte.setTarjeta(0);
@@ -40,31 +40,31 @@ public class ServicioCorte {
 			}
 		}
 		corte.setTotal(corte.getEfectivo()+corte.getTarjeta()+corte.getCredito()+corte.getVales());
+		corte.setDate(fecha);
+		corte.setTipoOperacion(tipoOperacion);
 		return corte;
 	}
 	
-	public Corte guardarCorte(LocalDate fecha, double efectivo, double tarjeta, double credito, double vales, double total) {
+	public Corte guardarCorte(LocalDate fecha, double efectivo, double tarjeta, double credito, double vales, double total, 
+			int tipoOperacion) {
 		log.info("Guardando corte...");
 		Corte corte = new Corte();
 		corte.setDate(fecha);
-		System.out.println(fecha);
+		corte.setTipoOperacion(tipoOperacion);
 		corte.setEfectivo(efectivo);
-		System.out.println(efectivo);
 		corte.setTarjeta(tarjeta);
-		System.out.println(tarjeta);
 		corte.setCredito(credito);
-		System.out.println(vales);
 		corte.setVales(vales);
-		System.out.println(total);
 		corte.setTotal(total);
+		corte.setTipoOperacion(tipoOperacion);
 		
 		corteRepository.save(corte);
 		log.info("El corte ha sido agregado");
 		return corte;
 	}
 	
-	public Corte recuperaCorte(LocalDate fecha){
-		Corte corte = corteRepository.findByDate(fecha);
+	public Corte recuperaCorte(LocalDate fecha, int tipoOperacion){
+		Corte corte = corteRepository.findByDateAndTipoOperacion(fecha, tipoOperacion);
 		return corte;
 	}
 	

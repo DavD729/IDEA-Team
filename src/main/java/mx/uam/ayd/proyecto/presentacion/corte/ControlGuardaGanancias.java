@@ -11,6 +11,7 @@ import mx.uam.ayd.proyecto.negocio.ServicioVenta;
 import mx.uam.ayd.proyecto.negocio.modelo.Corte;
 import mx.uam.ayd.proyecto.negocio.modelo.Venta;
 
+
 @Component
 public class ControlGuardaGanancias {
 	
@@ -29,15 +30,18 @@ public class ControlGuardaGanancias {
 	 */
 	public void inicia() {
 		LocalDate Fecha = LocalDate.now();
+		Corte corte = new Corte();
+		corte.setTipoOperacion(1);
 		List <Venta> ventas = servicioVenta.recuperaVentas(Fecha);
-		Corte corte = servicioCorte.sumaVentas(ventas);
-		ventana.muestra(this, corte);
+		corte = servicioCorte.sumaVentas(ventas,Fecha,corte.getTipoOperacion());
+		ventana.muestra(this, corte, corte.getTipoOperacion());
 	}
 	
-	public Corte guardarCorte(LocalDate Date, double Efectivo, double Tarjeta, double Credito, double Vales, double Total) {
+	public Corte guardarCorte(LocalDate Date, double Efectivo, double Tarjeta, double Credito, double Vales, double Total, 
+			int tipoOperacion) {
 		Corte corte = null;
 		try {
-			corte = servicioCorte.guardarCorte(Date, Efectivo,Tarjeta,Credito,Vales,Total);
+			corte = servicioCorte.guardarCorte(Date, Efectivo,Tarjeta,Credito,Vales,Total,tipoOperacion);
 			ventana.muestraDialogoConMensaje("Corte de caja guardado exitosamente");
 		} catch(Exception ex) {
 			ventana.muestraDialogoConMensaje("Error al guardar el corte de caja");
@@ -45,8 +49,8 @@ public class ControlGuardaGanancias {
 		return corte;
 	}
 	
-	public Corte buscaCorte(LocalDate Date) {
-		Corte corte = servicioCorte.recuperaCorte(Date);
+	public Corte buscaCorte(LocalDate Date, int tipoOperacion) {
+		Corte corte = servicioCorte.recuperaCorte(Date, tipoOperacion);
 		return corte;
 	}
 	

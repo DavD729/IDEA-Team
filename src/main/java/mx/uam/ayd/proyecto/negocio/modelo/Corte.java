@@ -23,13 +23,12 @@ public class Corte {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idCorte;
 	private LocalDate date;
+	private int tipoOperacion;
 	private double Efectivo;
 	private double Tarjeta;
 	private double Credito;
 	private double Vales;
 	private double Total;
-	
-	
 	
 	@OneToMany(targetEntity = Corte.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "idCorte")
