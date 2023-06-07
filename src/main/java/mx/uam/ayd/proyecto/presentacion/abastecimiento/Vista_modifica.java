@@ -22,6 +22,8 @@ import org.springframework.stereotype.Component;
 import mx.uam.ayd.proyecto.exception.RangoInvalidoException;
 import mx.uam.ayd.proyecto.negocio.modelo.Producto;
 
+
+
 @Component
 @SuppressWarnings("serial")
 public class Vista_modifica extends JFrame {
