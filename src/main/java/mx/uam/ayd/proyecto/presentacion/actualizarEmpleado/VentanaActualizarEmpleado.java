@@ -6,6 +6,10 @@ import javax.swing.border.EmptyBorder;
 
 import org.springframework.stereotype.Component;
 
+import mx.uam.ayd.proyecto.negocio.modelo.Empleado;
+import mx.uam.ayd.proyecto.negocio.modelo.Puesto;
+import mx.uam.ayd.proyecto.presentacion.administracion.agregarEmpleados.ControlAddEmpleado;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
@@ -33,6 +37,7 @@ public class VentanaActualizarEmpleado  extends JFrame {
 	private JTextField textFieldEmail;
 	private JTextField textFieldTarea;
 	private JComboBox <String> comboBoxPuesto;
+	private Empleado Empleado;
 	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -187,32 +192,79 @@ public class VentanaActualizarEmpleado  extends JFrame {
 			}
 		});
 		
+		comboBoxPuesto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("esta funcionando el combo box ");
+			}
+		});
+		
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(textFieldNombre.getText().equals("") 
+					|| textFieldApellidoP.getText().equals("")
+					|| textFieldApellidoM.getText().equals("")
+					|| textFieldDireccion.getText().equals("")
+					|| textFieldTel.getText().equals("")
+					|| textFieldEmail.getText().equals("")
+					|| textFieldTarea.getText().equals("")) {
+					muestraDialogoConMensaje("Los Campos no deben de estar Vacios");
+				} else {
+					controlAEmpleado.actualizarEmpleado( Empleado,
+							textFieldNombre.getText(),
+							textFieldApellidoP.getText(), 
+							textFieldApellidoM.getText(),
+							textFieldDireccion.getText(),
+							textFieldTel.getText(),
+							textFieldEmail.getText(),
+							textFieldTarea.getText(),
+							(String) comboBoxPuesto.getSelectedItem());
+				}
+			}
+		});
+		
 	
 	}
-	/*
-	public void muestra(ControlAddEmpleado controlAddEmpleado,List <Puesto> puestos) {
-		this.controlAddEmpleado= controlAddEmpleado;
-		textFieldNombre.setText("");
-		textFieldApellidoP.setText("");
-		textFieldApellidoM.setText("");
-		textFieldDireccion.setText("");
-		textFieldTel.setText("");
-		textFieldEmail.setText("");
-		textFieldTarea.setText("");
-		
+	
+	/*public void muestraPuestos(List <Puesto> puestos) {
 		DefaultComboBoxModel <String> comboBoxModel =new DefaultComboBoxModel <>();
 		for(Puesto puesto:puestos) {
 			comboBoxModel.addElement(puesto.getNombre());
 		}
 		comboBoxPuesto.setModel(comboBoxModel);
 		setVisible(true);
-	}
-	*/
+	}*/
+	
+	
 	public void muestra(ControlActualizarEmpleado controlAEmpleado) {
 		this.controlAEmpleado=controlAEmpleado;
 		textFieldBuscar.setText("");
 		setVisible(true);
 	}
+
+	
+	
+	public void muestraEmpleadoRecuperado(Empleado empleado,List <Puesto> puestos) {
+		 System.out.println("Empleado desde control= "+empleado.getNombre());
+		 textFieldNombre.setText(empleado.getNombre());
+			textFieldApellidoP.setText(empleado.getApellidoP());
+			textFieldApellidoM.setText(empleado.getApellidoM());
+			textFieldDireccion.setText(empleado.getDireccion());
+			textFieldTel.setText(empleado.getTel());
+			textFieldEmail.setText(empleado.getEmail());
+			textFieldTarea.setText(empleado.getTarea());
+	
+			//DefaultComboBoxModel <String> comboBoxModel =new DefaultComboBoxModel <>();
+			//comboBoxModel.addElement(controlAEmpleado.recuperaNomPuestoEmpleado(empleado));
+			/*comboBoxPuesto.setModel(comboBoxModel);
+		
+			for(Puesto puesto:puestos) {
+				comboBoxModel.addElement(puesto.getNombre());
+			}
+			comboBoxPuesto.setModel(comboBoxModel);*/
+			
+			setVisible(true);
+	}
+	
 	public void muestraDialogoConMensaje(String mensaje ) {
 		JOptionPane.showMessageDialog(this , mensaje);
 	}

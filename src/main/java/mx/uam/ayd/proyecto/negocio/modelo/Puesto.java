@@ -41,5 +41,18 @@ public class Puesto {
 		return empleados.add(empleado);
 	}
 	
+	public boolean actualizarEmpleado(Empleado empleado) {
+		if(empleado==null) {
+			throw new IllegalArgumentException("El usuario no puede ser null ");	
+		}
+		
+		if(empleados.contains(empleado)) {
+			//Checa si el empleado esta en el grupo
+			System.out.println("Nombre del puesto"+nombre);
+			return empleados.add(empleado);
+			}
+		return false;
+	}
+	
 
 }

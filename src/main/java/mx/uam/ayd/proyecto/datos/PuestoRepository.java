@@ -8,4 +8,5 @@ public interface PuestoRepository extends CrudRepository <Puesto,Long> {
 	//Consulta y recupera los datos por como fue nombrado el Puesto
 	public Puesto findByNombre(String nombre);
 	
+	
 }
