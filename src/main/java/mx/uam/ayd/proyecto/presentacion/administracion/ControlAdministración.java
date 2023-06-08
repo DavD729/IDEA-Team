@@ -3,7 +3,9 @@ package mx.uam.ayd.proyecto.presentacion.administracion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import mx.uam.ayd.proyecto.presentacion.actualizarEmpleado.ControlActualizarEmpleado;
+
+import mx.uam.ayd.proyecto.presentacion.administracion.actualizarEmpleado.ControlActualizarEmpleado;
+
 import mx.uam.ayd.proyecto.presentacion.administracion.agregarEmpleados.ControlAddEmpleado;
 /**
  * Esta clase lleva el flujo de control de la ventana principal

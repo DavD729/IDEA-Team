@@ -47,38 +47,14 @@ public class ServicioEmpleado {
 
 		return empleado;
 	}
-	
-	public Empleado recuperarEmpleado(String email) {
-		Empleado empleado=empleadoRepository.findByEmail(email);		
-		/*
-		if(empleado!=null) {
-			throw new IllegalArgumentException("Empleado Existente");
-		}*/
-		
-		return empleado;
-	}
-	/*
-	public  Puesto recuperaPuestoE(Empleado empleado, List <Puesto> puestos) {
-		for(Puesto puesto:puestos) {
-			if(puesto.actualizarEmpleado(empleado)!=false) {
-				System.out.print("Puesto QUE TIENE EMPLEADO:"+puesto.getNombre());
-				return puesto;
-			}
-				
-		}
-		return null;
-	}*/
-	
-	public void actualizarEmpleado(Empleado empleado, String nombre, String apellidoP, String apellidoM, String direccion,String tel, String email, String tarea,String Puestos) {
-		log.info("Agregando empleado");
-		
-	
-		
-		Puesto puesto=puestoRepository.findByNombre(Puestos);
+
+	public void actualizarEmpleado(Empleado empleado,Puesto puesto,String nombre, String apellidoP, String apellidoM, String direccion,String tel, String email, String tarea,String Puestos) {
+		log.info("Actulizar Empleado");
+		//Puesto puesto=puestoRepository.findByNombre(Puestos);
 		if(puesto==null) {
 			throw new IllegalArgumentException("No se encontro el Puesto");	
 		}
-	/*	
+
 		empleado.setNombre(nombre);
 		empleado.setApellidoP(apellidoP);
 		empleado.setApellidoM(apellidoM);
@@ -86,11 +62,29 @@ public class ServicioEmpleado {
 		empleado.setTel(tel);
 		empleado.setEmail(email);
 		empleado.setTarea(tarea);
-		empleadoRepository.save(empleado);*/
+
+		empleadoRepository.save(empleado);
 		/*puesto.actualizarEmpleado(empleado);
 		puestoRepository.save(puesto);*/
 	}
 	
 	
+	
+	public Empleado recuperarEmpleado(String email) {
+		Empleado empleado=empleadoRepository.findByEmail(email);
+		return empleado;
+	}
+	
+	public  Puesto recuperaPuestoEmpleado(Empleado empleado, List <Puesto> puestos) {
+		for(Puesto puesto:puestos) {
+			if(puesto.actualizarEmpleado(empleado)!=false) {
+				//System.out.print("Puesto QUE TIENE EMPLEADO:"+puesto.getNombre());
+				return puesto;
+			}
+				
+		}
+		return null;
+	}
+
 
 }

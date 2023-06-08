@@ -43,16 +43,33 @@ public class Puesto {
 	
 	public boolean actualizarEmpleado(Empleado empleado) {
 		if(empleado==null) {
+
 			throw new IllegalArgumentException("El usuario no puede ser null ");	
 		}
 		
 		if(empleados.contains(empleado)) {
 			//Checa si el empleado esta en el grupo
+
 			System.out.println("Nombre del puesto"+nombre);
 			return empleados.add(empleado);
 			}
 		return false;
 	}
-	
+
+
+
+	public boolean actualizarEmpleadoBD(Empleado empleado) {
+		if(empleado==null) {
+			throw new IllegalArgumentException("El Usuario no puede ser null");
+		}
+		
+		if(empleados.contains(empleado)) {
+			//Checa si el empleado esta en el grupo
+			return false;
+		}
+		empleados.remove(empleado);
+		return empleados.add(empleado);
+	}
+
 
 }
