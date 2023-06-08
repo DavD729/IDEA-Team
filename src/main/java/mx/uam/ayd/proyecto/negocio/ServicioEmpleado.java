@@ -48,13 +48,13 @@ public class ServicioEmpleado {
 		return empleado;
 	}
 
-	public void actualizarEmpleado(Empleado empleado,Puesto puesto,String nombre, String apellidoP, String apellidoM, String direccion,String tel, String email, String tarea,String Puestos) {
-		log.info("Actulizar Empleado");
-		//Puesto puesto=puestoRepository.findByNombre(Puestos);
+	public void actualizarEmpleado(Empleado empleado,Puesto puestoRecuperado,String nombre, String apellidoP, String apellidoM, String direccion,String tel, String email, String tarea,String Puestos) {
+		//log.info("Actulizar Empleado");
+		Puesto puesto=puestoRepository.findByNombre(Puestos);
 		if(puesto==null) {
 			throw new IllegalArgumentException("No se encontro el Puesto");	
 		}
-
+	
 		empleado.setNombre(nombre);
 		empleado.setApellidoP(apellidoP);
 		empleado.setApellidoM(apellidoM);
@@ -62,10 +62,16 @@ public class ServicioEmpleado {
 		empleado.setTel(tel);
 		empleado.setEmail(email);
 		empleado.setTarea(tarea);
-
 		empleadoRepository.save(empleado);
-		/*puesto.actualizarEmpleado(empleado);
-		puestoRepository.save(puesto);*/
+		
+		if(!puestoRecuperado.getNombre().equals(puesto.getNombre())) {
+			if(puesto.addEmpleado(empleado)==false) {
+				puestoRecuperado.eliminarEmpleadoPuesto(empleado);
+				puestoRepository.save(puestoRecuperado);
+				puesto.addEmpleado(empleado);													
+			}
+			puestoRepository.save(puesto);
+		}
 	}
 	
 	
@@ -77,8 +83,7 @@ public class ServicioEmpleado {
 	
 	public  Puesto recuperaPuestoEmpleado(Empleado empleado, List <Puesto> puestos) {
 		for(Puesto puesto:puestos) {
-			if(puesto.actualizarEmpleado(empleado)!=false) {
-				//System.out.print("Puesto QUE TIENE EMPLEADO:"+puesto.getNombre());
+			if(puesto.validarPuestoEmpleado(empleado)!=false) {
 				return puesto;
 			}
 				

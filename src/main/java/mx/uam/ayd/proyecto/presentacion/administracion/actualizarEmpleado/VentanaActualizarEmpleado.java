@@ -217,6 +217,17 @@ public class VentanaActualizarEmpleado extends JFrame {
 	public void muestra(ControlActualizarEmpleado controlActualizarEmpleado) {
 		this.controlActualizarEmpleado=controlActualizarEmpleado;
 		textFieldBuscar.setText("");
+		textFieldNombre.setText("");
+		textFieldApellidoP.setText("");
+		textFieldApellidoM.setText("");
+		textFieldDireccion.setText("");
+		textFieldTel.setText("");
+		textFieldEmail.setText("");
+		textFieldTarea.setText("");
+		DefaultComboBoxModel <String> comboBoxModel =new DefaultComboBoxModel <>();
+		comboBoxModel.addElement(" ");
+		comboBoxPuesto.setModel(comboBoxModel);	
+		
 		setVisible(true);
 	}
 	
@@ -230,14 +241,18 @@ public class VentanaActualizarEmpleado extends JFrame {
 		textFieldTarea.setText(empleado.getTarea());
 		puestoInicial=controlActualizarEmpleado.recuperaNomPuestoEmpleado(empleado);
 		DefaultComboBoxModel <String> comboBoxModel =new DefaultComboBoxModel <>();
-		comboBoxModel.addElement(puestoInicial.getNombre());
-		comboBoxPuesto.setModel(comboBoxModel);
+		comboBoxModel.addElement(puestoInicial.getNombre());	
+		comboBoxPuesto.setModel(comboBoxModel);	
 		for(Puesto puesto:puestos) {
-			comboBoxModel.addElement(puesto.getNombre());
+			if(!puesto.getNombre().equals(puestoInicial.getNombre())) {
+				comboBoxModel.removeElement(puesto.getNombre());
+				comboBoxModel.addElement(puesto.getNombre());
+			}
+				//comboBoxModel.addElement(puesto.getNombre());
 		}
-		comboBoxPuesto.setModel(comboBoxModel);		
+		comboBoxPuesto.setModel(comboBoxModel);	
 	}
-
+	
 	public void muestraDialogoConMensaje(String mensaje ) {
 		JOptionPane.showMessageDialog(this , mensaje);
 	}
