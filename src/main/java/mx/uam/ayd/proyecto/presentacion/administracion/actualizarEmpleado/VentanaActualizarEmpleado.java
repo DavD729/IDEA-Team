@@ -25,7 +25,6 @@ import javax.swing.JComboBox;
 
 @Component
 
-/*Check commit**/
 
 public class VentanaActualizarEmpleado extends JFrame {
 	
