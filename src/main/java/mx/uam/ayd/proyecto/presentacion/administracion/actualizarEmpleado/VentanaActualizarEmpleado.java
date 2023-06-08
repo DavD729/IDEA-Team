@@ -177,8 +177,9 @@ public class VentanaActualizarEmpleado extends JFrame {
 					) {
 					muestraDialogoConMensaje("Los Campos no deben de estar Vacios");
 				} else {
+					//convoca a recuperar el empleado y su puesto 
 					empleado=controlActualizarEmpleado.recuperarEmpleado(textFieldBuscar.getText());
-					puestoInicial=controlActualizarEmpleado.recuperaNomPuestoEmpleado(empleado);
+					puestoInicial=controlActualizarEmpleado.recuperaPuestoEmpleado(empleado);
 				}
 			}
 		});
@@ -239,7 +240,7 @@ public class VentanaActualizarEmpleado extends JFrame {
 		textFieldTel.setText(empleado.getTel());
 		textFieldEmail.setText(empleado.getEmail());
 		textFieldTarea.setText(empleado.getTarea());
-		puestoInicial=controlActualizarEmpleado.recuperaNomPuestoEmpleado(empleado);
+		puestoInicial=controlActualizarEmpleado.recuperaPuestoEmpleado(empleado);
 		DefaultComboBoxModel <String> comboBoxModel =new DefaultComboBoxModel <>();
 		comboBoxModel.addElement(puestoInicial.getNombre());	
 		comboBoxPuesto.setModel(comboBoxModel);	

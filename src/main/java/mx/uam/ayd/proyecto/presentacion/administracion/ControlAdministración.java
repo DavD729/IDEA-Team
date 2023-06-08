@@ -39,6 +39,7 @@ public class ControlAdministración {
 		controlAddEmpleado.inicia();
 	}
 	
+	//Inicia el flujo de la venatan Actualizar Empleado
 	public void ActualizarEmpleado() {
 		controlActualizarEmpleado.inicia();
 	}

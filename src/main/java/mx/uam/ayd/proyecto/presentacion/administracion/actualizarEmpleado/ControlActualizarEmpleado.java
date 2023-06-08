@@ -27,6 +27,7 @@ public class ControlActualizarEmpleado {
 		ventanaActualizarEmpleado.muestra(this);
 	}
 	
+	// Control para Recuperar el empleado sobre el que se trabajara
 	public Empleado recuperarEmpleado(String email) {
 		 List <Puesto> puestos= servicioPuesto.recuperaPuestos();
 		 Empleado empleado=servicioEmpleado.recuperarEmpleado(email);	
@@ -34,6 +35,7 @@ public class ControlActualizarEmpleado {
 		 return empleado;
 	}
 	
+	// Control para actualizar datos del Empleado
 	public void actualizarEmpleado(Empleado empleado,Puesto puesto,String nombre,
 			String ApellidoP, 
 			String ApellidoM,
@@ -44,19 +46,21 @@ public class ControlActualizarEmpleado {
 			String Puestos) {
 		try {
 			servicioEmpleado.actualizarEmpleado(empleado,puesto,nombre,ApellidoP,ApellidoM,Direccion,Tel,Email,Tarea,Puestos);
-			ventanaActualizarEmpleado.muestraDialogoConMensaje("Empleado Actualizado");
+			ventanaActualizarEmpleado.muestraDialogoConMensaje("Empleado Actualizado con Exito");
 		}catch (Exception ex) {
 			ventanaActualizarEmpleado.muestraDialogoConMensaje("Error al Actualizar empleado "+ex.getMessage());
 		}
 		termina();		
 	}
 	
-	public Puesto recuperaNomPuestoEmpleado(Empleado empleado) {
+	//Control para recuperar el grupo el Puesto al que pertenece el empleado
+	public Puesto recuperaPuestoEmpleado(Empleado empleado) {
 		List <Puesto> puestos= servicioPuesto.recuperaPuestos();
 		Puesto puesto=servicioEmpleado.recuperaPuestoEmpleado(empleado, puestos);
 		return puesto;
 	}
 	
+	//Finaliza la funcion  Actualizar Empleado
 	public void termina() {
 		ventanaActualizarEmpleado.setVisible(false);
 	}

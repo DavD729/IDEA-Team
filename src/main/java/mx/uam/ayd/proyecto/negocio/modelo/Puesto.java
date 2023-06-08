@@ -41,6 +41,7 @@ public class Puesto {
 		return empleados.add(empleado);
 	}
 	
+	//Valida si el empleado existe en grupo de cada uno de los Puestos
 	public boolean validarPuestoEmpleado(Empleado empleado) {
 		if(empleado==null) {
 
@@ -49,15 +50,13 @@ public class Puesto {
 		
 		if(empleados.contains(empleado)) {
 			//Checa si el empleado esta en el grupo
-
-			//System.out.println("Nombre del puesto"+nombre);
 			return true;
 			}
 		return false;
 	}
 	
-	public boolean eliminarEmpleadoPuesto(Empleado empleado) {
-		
+	//Elimina al empleado del grupo del Puesto al que este asociado 
+	public boolean eliminarEmpleadoPuesto(Empleado empleado) {		
 		if(empleado==null) {
 
 			throw new IllegalArgumentException("El usuario no puede ser null ");	
