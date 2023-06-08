@@ -248,7 +248,6 @@ public class VentanaActualizarEmpleado extends JFrame {
 				comboBoxModel.removeElement(puesto.getNombre());
 				comboBoxModel.addElement(puesto.getNombre());
 			}
-				//comboBoxModel.addElement(puesto.getNombre());
 		}
 		comboBoxPuesto.setModel(comboBoxModel);	
 	}
