@@ -1,6 +1,6 @@
 package mx.uam.ayd.proyecto.datos;
 
-import java.time.LocalDate;
+import java.time.YearMonth;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -13,5 +13,5 @@ public interface HistorialVentaRepository extends CrudRepository <HistorialVenta
 	 * @param fecha Fecha del historial a buscar
 	 * @return Historial de la fecha indicada
 	 */
-	public HistorialVenta findByFecha(LocalDate fecha);
+	public HistorialVenta findByFecha(YearMonth fecha);
 }
