@@ -46,7 +46,7 @@ public class VentanaAdministracion extends JFrame {
 		JButton btnActualizar = new JButton("Actualizar Datos de Empleado");
 		btnActualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//control.listarUsuarios();
+				control.ActualizarEmpleado();
 			}
 		});
 		btnActualizar.setBounds(15, 100, 260, 50);

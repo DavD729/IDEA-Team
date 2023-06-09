@@ -186,6 +186,7 @@ public class VentanaAddEmpleado  extends JFrame {
 		textFieldEmail.setText("");
 		textFieldTarea.setText("");
 		
+		
 		DefaultComboBoxModel <String> comboBoxModel =new DefaultComboBoxModel <>();
 		for(Puesto puesto:puestos) {
 			comboBoxModel.addElement(puesto.getNombre());
