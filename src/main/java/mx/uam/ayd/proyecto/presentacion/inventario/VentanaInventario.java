@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Component
 @SuppressWarnings("all")
 public class VentanaInventario extends JFrame {
@@ -64,11 +63,8 @@ public class VentanaInventario extends JFrame {
 		panelContenido.add(btnRegistra);
 		
 		JButton btnHistorial= new JButton("Historial de ventas");
-		btnHistorial.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				log.info("Action Historial");
-				log.info("WIP HU-09");
-			}
+		btnHistorial.addActionListener(actionEvent -> {
+			controlI.muestraHistorialVenta();
 		});
 		btnHistorial.setBounds(180, 520, 150, 29);
 		panelContenido.add(btnHistorial);

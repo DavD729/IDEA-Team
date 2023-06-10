@@ -2,7 +2,6 @@ package mx.uam.ayd.proyecto.negocio.modelo;
 
 import java.time.YearMonth;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +17,6 @@ public class HistorialVenta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idHistorial;
-	private YearMonth fechaHistoria;
-	private final Map<Producto, Integer> productosVendidos = new HashMap<>();
+	private YearMonth fecha;
+	private final HashMap<Producto, Integer> productosVendidos = new HashMap<>();
 }

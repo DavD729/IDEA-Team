@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import mx.uam.ayd.proyecto.negocio.ServicioProducto;
 import mx.uam.ayd.proyecto.presentacion.inventario.agregarCategoria.ControlAgregarCategoria;
 import mx.uam.ayd.proyecto.presentacion.inventario.agregarProducto.ControlAgregarProducto;
+import mx.uam.ayd.proyecto.presentacion.inventario.mostrarHistorial.ControlHistorialVenta;
 
 @Component
 public class ControlInventario {
@@ -15,6 +16,9 @@ public class ControlInventario {
 	
 	@Autowired
 	private ControlAgregarProducto controlProducto;
+	
+	@Autowired
+	private ControlHistorialVenta controlHistorial;
 	
 	@Autowired
 	private ServicioProducto servicioProducto;
@@ -32,6 +36,10 @@ public class ControlInventario {
 	
 	public void agregaProducto() {
 		controlProducto.inicio();
+	}
+	
+	public void muestraHistorialVenta() {
+		controlHistorial.inicio();
 	}
 	
 	public Object[][] recuperaTablaProductos() {
