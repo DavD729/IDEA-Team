@@ -1,7 +1,5 @@
 package mx.uam.ayd.proyecto.presentacion.inventario.mostrarHistorial;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.Date;
@@ -54,14 +52,10 @@ public class VentanaHistorialVenta extends JFrame {
 		panelContenido.add(titulo);
 		
 		seleccionadorFecha = new JDateChooser();
-		seleccionadorFecha.addPropertyChangeListener(new PropertyChangeListener() {
-			
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				if("date".equals(evt.getPropertyName())) {
-					actualizaTabla();
-                }
-			}
+		seleccionadorFecha.addPropertyChangeListener(eventoCambio -> {
+			if("date".equals(eventoCambio.getPropertyName())) {
+				actualizaTabla();
+            }
 		});
 		seleccionadorFecha.setBounds(30, 25, 130, 25);
 		panelContenido.add(seleccionadorFecha);
@@ -107,30 +101,30 @@ public class VentanaHistorialVenta extends JFrame {
 	}
 	
 	private boolean exportaTablaPDF(YearMonth fecha) {
-		Document document = new Document();
-		JFileChooser fileChooser = new JFileChooser();
+		Document pdf = new Document();
+		JFileChooser seleccionadorArchivo = new JFileChooser();
 		String nombreArchivo = "";
-		int userSelection = fileChooser.showSaveDialog(null);
+		int userSelection = seleccionadorArchivo.showSaveDialog(null);
 		if (userSelection == JFileChooser.APPROVE_OPTION) {
-			String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-			nombreArchivo = fileChooser.getSelectedFile().getName();
+			String filePath = seleccionadorArchivo.getSelectedFile().getAbsolutePath();
+			nombreArchivo = seleccionadorArchivo.getSelectedFile().getName();
 			String[][] datos = controlHistorialVenta.recuperaTabla(fecha);
 			try {
-				PdfWriter.getInstance(document, new FileOutputStream(filePath));
-				document.open();
-				PdfPTable table = new PdfPTable(datos[0].length);
-				for (String header : datos[0]) {
-					PdfPCell cell = new PdfPCell();
-					cell.setPhrase(new com.itextpdf.text.Phrase(header));
-					table.addCell(cell);
+				PdfWriter.getInstance(pdf, new FileOutputStream(filePath));
+				pdf.open();
+				PdfPTable tabla = new PdfPTable(datos[0].length);
+				for (String encabezado : datos[0]) {
+					PdfPCell celda = new PdfPCell();
+					celda.setPhrase(new com.itextpdf.text.Phrase(encabezado));
+					tabla.addCell(celda);
 				}
 				for (int i = 1; i < datos.length; i++) {
-					for (String cellData : datos[i]) {
-						table.addCell(cellData);
+					for (String celdaDatos : datos[i]) {
+						tabla.addCell(celdaDatos);
 					}
 				}
-				document.add(table);
-				document.close();
+				pdf.add(tabla);
+				pdf.close();
 				
 			} catch (DocumentException e) {
 				muestraErrorConMensaje("La información de la tabla no es valida");
@@ -143,7 +137,7 @@ public class VentanaHistorialVenta extends JFrame {
 				return false;
 			}
 		}
-		muestraErrorConMensaje(String.format("El documento %s, ha sido guardado en %s", nombreArchivo));
+		if(!nombreArchivo.isBlank()) muestraDialogoConMensaje(String.format("El documento %s, ha sido guardado exitosamente", nombreArchivo));
 		return true;
 	}
 	
