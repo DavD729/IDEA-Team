@@ -20,15 +20,11 @@ public class ControlHistorialVenta {
 		ventanaHistorialVenta.muestraVentana(this);
 	}
 	
-	public void exportaTablaPDF() {
-		
-	}
-	
 	public void finalizaControlHistorial() {
 		ventanaHistorialVenta.dispose();
 	}
 	
-	public Object[][] recuperaTabla(YearMonth fecha) {
+	public String[][] recuperaTabla(YearMonth fecha) {
 		return servicioHistorial.recuperaTablaDeDatosPorFecha(fecha);
 	}
 }

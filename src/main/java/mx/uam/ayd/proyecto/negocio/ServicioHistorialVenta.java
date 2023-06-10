@@ -51,16 +51,16 @@ public class ServicioHistorialVenta {
 		});
 	}
 	
-	public Object[][] recuperaTablaDeDatosPorFecha(YearMonth fecha) {
+	public String[][] recuperaTablaDeDatosPorFecha(YearMonth fecha) {
 		HistorialVenta historial = recuperaOrCreaHistorial(fecha);
 		Map<Producto, Integer> datos = historial.getProductosVendidos();
-		Object[][] matrizDeDatos = new Object[datos.size()][3];
+		String[][] matrizDeDatos = new String[datos.size()][3];
 		Set<Producto> productos = datos.keySet();
 		Collection<Integer> vendidos = datos.values();
 		for(int index = 0; index < datos.size(); index++) {
 			matrizDeDatos[index][0] = ((Producto)productos.toArray()[index]).getNombre();
-			matrizDeDatos[index][1] = vendidos.toArray()[index];
-			matrizDeDatos[index][2] = ((Producto)productos.toArray()[index]).getIdProducto();
+			matrizDeDatos[index][1] = vendidos.toArray()[index].toString();
+			matrizDeDatos[index][2] = String.valueOf(((Producto)productos.toArray()[index]).getIdProducto());
 		}
 		return matrizDeDatos;
 	}
