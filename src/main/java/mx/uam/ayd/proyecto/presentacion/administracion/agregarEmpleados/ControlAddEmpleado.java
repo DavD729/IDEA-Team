@@ -40,7 +40,7 @@ public class ControlAddEmpleado {
 		
 		try {
 			servicioEmpleado.agregarEmpleado(Nombre,ApellidoP,ApellidoM,Direccion,Tel,Email,Tarea, Puesto);
-			ventanaAddEmpleado.muestraDialogoConMensaje("Usuario agregado con exito");
+			ventanaAddEmpleado.muestraDialogoConMensaje("Empleado agregado con exito");
 		}catch (Exception ex) {
 			ventanaAddEmpleado.muestraDialogoConMensaje("Error al agregar empleado "+ex.getMessage());
 		}
