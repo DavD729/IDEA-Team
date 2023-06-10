@@ -38,6 +38,7 @@ public class VentanaHistorialVenta extends JFrame {
 	private JTable tablaInventario;
 	private JScrollPane scrollTable;
 	private JDateChooser seleccionadorFecha;
+	private YearMonth fechaPrevia;
 	private List<String> encabezados = List.of("Producto", "Vendidos", "ID");
 	
 	public VentanaHistorialVenta() {
@@ -85,8 +86,7 @@ public class VentanaHistorialVenta extends JFrame {
 		
 		JButton btnExportaPDF = new JButton("Exportar a PDF");
 		btnExportaPDF.addActionListener(actionEvent -> {
-			LocalDate fecha = seleccionadorFecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-			exportaTablaPDF(YearMonth.of(fecha.getYear(), fecha.getMonth()));
+			exportaTablaPDF(fechaPrevia);
 		});
 		btnExportaPDF.setBounds(15, 420, 120, 29);
 		panelContenido.add(btnExportaPDF);
@@ -134,15 +134,12 @@ public class VentanaHistorialVenta extends JFrame {
 				
 			} catch (DocumentException e) {
 				muestraErrorConMensaje("La información de la tabla no es valida");
-				//e.printStackTrace();
 				return false;
 			} catch (ArrayIndexOutOfBoundsException e) {
 				muestraErrorConMensaje("No se puede exportar una Tabla vacia");
-				//e.printStackTrace();
 				return false;
 			} catch (FileNotFoundException e) {
 				muestraErrorConMensaje("La ubicación no existe o no puede ser accedida");
-				//e.printStackTrace();
 				return false;
 			}
 		}
@@ -151,12 +148,17 @@ public class VentanaHistorialVenta extends JFrame {
 	}
 	
 	private void poblarInformacion() {
-		this.tablaInventario.setModel(new DefaultTableModel(controlHistorialVenta.recuperaTabla(YearMonth.now()), encabezados.toArray()));
+		this.fechaPrevia = YearMonth.now();
+		this.tablaInventario.setModel(new DefaultTableModel(controlHistorialVenta.recuperaTabla(fechaPrevia), encabezados.toArray()));
 		this.seleccionadorFecha.setDate(Date.valueOf(LocalDate.now()));
 	}
 	
 	private void actualizaTabla() {
 		LocalDate fecha = seleccionadorFecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		tablaInventario.setModel(new DefaultTableModel(controlHistorialVenta.recuperaTabla(YearMonth.of(fecha.getYear(), fecha.getMonth())),encabezados.toArray()));
+		YearMonth cambio = YearMonth.of(fecha.getYear(), fecha.getMonth());
+		if(cambio.compareTo(fechaPrevia) != 0) {
+			tablaInventario.setModel(new DefaultTableModel(controlHistorialVenta.recuperaTabla(cambio),encabezados.toArray()));
+			fechaPrevia = cambio;
+		}
 	}
 }
