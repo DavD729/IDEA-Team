@@ -89,6 +89,10 @@ public class ServicioProducto {
 		return producto;
 	}
 	
+	public boolean existeProducto(String nombre) {
+		return productoRepository.findByNombre(nombre) != null;
+	}
+	
 	/**
 	 * Ian - Integration
 	 */

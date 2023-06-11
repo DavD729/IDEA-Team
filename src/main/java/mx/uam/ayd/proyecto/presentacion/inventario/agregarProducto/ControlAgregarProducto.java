@@ -12,6 +12,14 @@ import mx.uam.ayd.proyecto.negocio.modelo.Producto;
 import mx.uam.ayd.proyecto.presentacion.inventario.VentanaInventario;
 import mx.uam.ayd.proyecto.presentacion.inventario.agregarCategoria.ControlAgregarCategoria;
 
+/**
+ * 
+ * 
+ * 
+ * @author David
+ *
+ */
+
 @Component
 public class ControlAgregarProducto {
 	
@@ -45,6 +53,10 @@ public class ControlAgregarProducto {
 		
 		this.finaliza();
 		return registro;
+	}
+	
+	public boolean revisaExistenciaProducto(String nombre) {
+		return servicioProducto.existeProducto(nombre);
 	}
 	
 	public void finaliza() {

@@ -1,7 +1,6 @@
 package mx.uam.ayd.proyecto.presentacion.inicio;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,74 +27,66 @@ import lombok.extern.slf4j.Slf4j;
 @SuppressWarnings("serial")
 public class VentanaInicio extends JFrame {
 	private JPanel panelContenido;
-	private ControlInicio controlI;
+	private ControlInicio controlInicio;
 	
 	public VentanaInicio() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBounds(130, 130, 225, 285);
+		this.setBounds(130, 130, 225, 320);
 		panelContenido = new JPanel();
 		panelContenido.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(panelContenido);
 		panelContenido.setLayout(null);
 		
-		JLabel etiqueta = new JLabel("Administración de Tienda");
-		etiqueta.setBounds(30, 5, 440, 16);
-		panelContenido.add(etiqueta);
+		JLabel lblTitulo = new JLabel("<html><div style='text-align: center;'>Administración de<br>Tienda</div></html>");
+		Font fuenteTitulo = new Font("Arial", Font.BOLD, 18);
+		lblTitulo.setBounds(25, 10, 440, 35);
+		lblTitulo.setFont(fuenteTitulo);
+		panelContenido.add(lblTitulo);
 		
 		// Sección Administración
 		JButton btnAdministracion = new JButton("Administración");
-		btnAdministracion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controlI.muestraContenidoAdministracion();
-			}
+		btnAdministracion.addActionListener(actionEvent -> {
+			controlInicio.muestraContenidoAdministracion();
 		});
-		btnAdministracion.setBounds(15, 40, 178, 29);
+		btnAdministracion.setBounds(15, 75, 178, 29);
 		panelContenido.add(btnAdministracion);
 		
 		// Sección abastecimiento
 		JButton btnAbastecimiento = new JButton("Abastecimiento");
-		btnAbastecimiento.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controlI.muestraContenidoAbastecimiento();
-			}
+		btnAbastecimiento.addActionListener(actionEvent -> {
+			controlInicio.muestraContenidoAbastecimiento();
 		});
-		btnAbastecimiento.setBounds(15, 80, 178, 29);
+		btnAbastecimiento.setBounds(15, 115, 178, 29);
 		panelContenido.add(btnAbastecimiento);
 		
 		// Sección inventario
 		JButton btnInventario = new JButton("Inventario");
-		btnInventario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controlI.muestraContenidoInventario();
-			}
+		btnInventario.addActionListener(actionEvent -> {
+			controlInicio.muestraContenidoInventario();
 		});
 		
-		btnInventario.setBounds(15, 120, 178, 29);
+		btnInventario.setBounds(15, 155, 178, 29);
 		panelContenido.add(btnInventario);
 		
 		// Sección ventas
 		JButton btnVentas = new JButton("Ventas");
-		btnVentas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				log.info("Action Ventas");
-			}
+		btnVentas.addActionListener(actionEvent -> {
+			log.info("Action Ventas");
 		});
-		btnVentas.setBounds(15, 160, 178, 29);
+		btnVentas.setBounds(15, 195, 178, 29);
 		panelContenido.add(btnVentas);
 		
 		// Sección corte de caja
 		JButton btnCorteCaja = new JButton("Corte de Caja");
-		btnCorteCaja.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controlI.muestraContenidoCorte();
-			}
+		btnCorteCaja.addActionListener(actionEvent -> {
+			controlInicio.muestraContenidoCorte();
 		});
-		btnCorteCaja.setBounds(15, 200, 178, 29);
+		btnCorteCaja.setBounds(15, 235, 178, 29);
 		panelContenido.add(btnCorteCaja);
 	}
 	
-	public void muestraVentana(ControlInicio control) {
-		this.controlI = control;
+	public void muestraVentana(ControlInicio controlInicio) {
+		this.controlInicio = controlInicio;
 		this.setVisible(true);
 	}
 }
