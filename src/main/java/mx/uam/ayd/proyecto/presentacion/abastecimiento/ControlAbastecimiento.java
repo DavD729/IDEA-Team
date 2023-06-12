@@ -9,10 +9,10 @@ import mx.uam.ayd.proyecto.negocio.ServicioProducto;
 import mx.uam.ayd.proyecto.negocio.modelo.Producto;
 
 @Component
-public class Control_vista {
+public class ControlAbastecimiento {
 	
 	@Autowired
-	private Vista_modifica ventanaModifica;
+	private VentanaAbastecimiento ventanaModifica;
 	
 	@Autowired 
 	private ServicioProducto servicioProducto;
@@ -25,18 +25,30 @@ public class Control_vista {
 		ventanaModifica.muestra(this);
 	}
 	
+	/*
+	 * REcupera la cantidad de productos en existencia
+	 */
 	public int recuperaCantidadActual() {
 		return servicioProducto.getNumeroProductos();
 	}
 	
+	/*
+	 * Recupera los productos de la base de datos
+	 */
 	public Object[][] obtenMatriz() {
 		return servicioProducto.recuperaMatriz();
 	}
 	
+	/*
+	 * Le envia la lista con las cantidades y precios actualizados
+	 */
 	public void actualizaProductos(List<Producto> productos) {
 		servicioProducto.acualiza(productos);
 	}
 	
+	/*
+	 * Finaliza la ventana de abastecimiento
+	 */
 	public void finalizaControlAbastecimiento() {
 		ventanaModifica.dispose();
 	}
