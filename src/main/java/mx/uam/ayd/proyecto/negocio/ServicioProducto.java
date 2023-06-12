@@ -95,6 +95,11 @@ public class ServicioProducto {
 	
 	private int numeroProductos;
 	
+	/**
+	 * Devuelve los datos de los productos registrados actuales en forma de Matriz para la ventana de abastecimiento
+	 * 
+	 * @return matriz 
+	 */
 	public Object[][] recuperaMatriz() {
 		List <Producto> lista = new ArrayList<>();
 		
@@ -116,15 +121,24 @@ public class ServicioProducto {
 		return matriz;
 	}
 	
+	/*
+	 * @param recibe la lista de prodcutos con los cambios hechos por el usuario desde la tabla 
+	 */
 	public void acualiza(List<Producto> lista) {
 		productoRepository.deleteAll();
 		productoRepository.saveAll(lista);	
 	}
 	
+	/*
+	 * @return entero que maneja la cantidad de productos en la base de datos
+	 */
 	public int getNumeroProductos() {
 		return numeroProductos;
 	}
 	
+	/*
+	 * @param actualiza la cantidad de los productos en existencia
+	 */
 	public void setNumeroProductos(int numeroProductos) {
 		this.numeroProductos = numeroProductos;
 	}
