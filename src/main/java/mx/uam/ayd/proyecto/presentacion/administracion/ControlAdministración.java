@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import mx.uam.ayd.proyecto.presentacion.administracion.actualizarEmpleado.ControlActualizarEmpleado;
 
 import mx.uam.ayd.proyecto.presentacion.administracion.agregarEmpleados.ControlAddEmpleado;
+import mx.uam.ayd.proyecto.presentacion.administracion.checkIO.ControlCheckIO;
 /**
  * Esta clase lleva el flujo de control de la ventana principal
  * 
@@ -21,6 +22,9 @@ public class ControlAdministración {
 	
 	@Autowired
 	private ControlActualizarEmpleado controlActualizarEmpleado;
+	
+	@Autowired
+	private ControlCheckIO controlCheckIO;
 	
 	@Autowired
 	private VentanaAdministracion ventana;
@@ -42,6 +46,11 @@ public class ControlAdministración {
 	//Inicia el flujo de la venatan Actualizar Empleado
 	public void ActualizarEmpleado() {
 		controlActualizarEmpleado.inicia();
+	}
+	
+	//Inicia el flujo de la venatan CheckIO
+	public void CheckIO() {
+		controlCheckIO.inicia();
 	}
 
 }

@@ -55,7 +55,7 @@ public class VentanaAdministracion extends JFrame {
 		JButton btnChek = new JButton("Checador de Horario I/O");
 		btnChek.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			/*	control.listarUsuarios();*/
+				control.CheckIO();
 			}
 		});
 		btnChek.setBounds(15, 160, 260, 50);
