@@ -23,7 +23,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 
 @SuppressWarnings("serial")
-
+// modificacion
 @Component
 public class VentanaCheckIO extends JFrame {
 	private JPanel contentPane;
