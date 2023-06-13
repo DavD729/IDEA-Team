@@ -10,9 +10,11 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import mx.uam.ayd.proyecto.datos.CategoriaRepository;
 import mx.uam.ayd.proyecto.datos.PuestoRepository;
+import mx.uam.ayd.proyecto.datos.RegistroRepository;
 import mx.uam.ayd.proyecto.datos.VentaRepository;
 import mx.uam.ayd.proyecto.negocio.modelo.Categoria;
 import mx.uam.ayd.proyecto.negocio.modelo.Puesto;
+import mx.uam.ayd.proyecto.negocio.modelo.Registro;
 import mx.uam.ayd.proyecto.negocio.modelo.Venta;
 import mx.uam.ayd.proyecto.presentacion.inicio.ControlInicio;
 
@@ -33,6 +35,9 @@ public class TiendaAplicacion {
 	
 	@Autowired
 	PuestoRepository puestoRepository;
+	
+	@Autowired
+	RegistroRepository registroRepository;
 	
 	@Autowired
 	VentaRepository ventaRepository;
@@ -64,6 +69,15 @@ public class TiendaAplicacion {
 		Puesto puestoVendedor = new Puesto();
 		puestoVendedor.setNombre("Vendedor");
 		puestoRepository.save(puestoVendedor);
+		
+		Registro registroEntrada = new Registro();
+		registroEntrada.setNombre("Entrando");
+		registroRepository.save(registroEntrada);
+		
+		Registro registroSalida = new Registro();
+		registroSalida.setNombre("Saliendo");
+		registroRepository.save(registroSalida);
+		
 		
 		//Inicia la inicialización de la BD para ventas
 		LocalDate Fecha = LocalDate.now();

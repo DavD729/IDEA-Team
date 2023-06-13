@@ -18,6 +18,9 @@ public class ServicioEmpleado {
 	@Autowired
 	private PuestoRepository puestoRepository;
 	
+	@Autowired
+	private RegistroRepository registroRepository;
+	
 	
 	//tiene el servicio de Agregar al empleado con los datos ingresados
 	public Empleado agregarEmpleado(String nombre, String apellidoP, String apellidoM,String direccion, String tel,  String email, String tarea,  String nombrePuesto) {
@@ -93,4 +96,14 @@ public class ServicioEmpleado {
 		}
 		return null;
 	}
+	
+	public Registro agregarEmpleadoRegistro(Empleado empleado,String nombreRegistro) {
+		Registro registro=registroRepository.findByNombre(nombreRegistro);
+		if(registro==null) {
+			throw new IllegalArgumentException("No se encontro el Puesto");	
+		}
+		registro.addEmpleado(empleado);
+		registroRepository.save(registro);
+		return registro;		
+	}	
 }

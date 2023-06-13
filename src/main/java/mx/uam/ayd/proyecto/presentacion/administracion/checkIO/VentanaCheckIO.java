@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import mx.uam.ayd.proyecto.negocio.modelo.Empleado;
 import mx.uam.ayd.proyecto.negocio.modelo.Puesto;
+import mx.uam.ayd.proyecto.negocio.modelo.Registro;
 import mx.uam.ayd.proyecto.presentacion.administracion.actualizarEmpleado.ControlActualizarEmpleado;
 
 import javax.swing.JOptionPane;
@@ -35,6 +36,7 @@ public class VentanaCheckIO extends JFrame {
 	private JTextField textFieldPuesto;
 	private JTextField textFieldTel;
 	private JTextField textFieldEmail;
+	private JComboBox <String> comboBoxRegistro;
 
 	private Empleado empleado;
 	private Puesto puestoInicial;
@@ -101,14 +103,15 @@ public class VentanaCheckIO extends JFrame {
 		contentPane.add(textFieldPuesto);
 		textFieldPuesto.setColumns(10);
 		
+		comboBoxRegistro = new JComboBox<>();
+		comboBoxRegistro.setBounds(20,170, 80, 26);		
+		contentPane.add(comboBoxRegistro);
 		
-		JButton btnEntrando = new JButton("Entrando");	
-		btnEntrando.setBounds(20, 170, 100, 29);
-		contentPane.add(btnEntrando);
 		
-		JButton btnSaliendo = new JButton("Saliendo");	
-		btnSaliendo.setBounds(130, 170, 100, 29);
-		contentPane.add(btnSaliendo);
+		
+		JButton btnChecar = new JButton("Checar");	
+		btnChecar.setBounds(115, 170, 100, 29);
+		contentPane.add(btnChecar);
 		
 
 		JButton btnHistorial = new JButton("Historial");	
@@ -150,11 +153,53 @@ public class VentanaCheckIO extends JFrame {
 		contentPane.add(btnCancelar);
 		*/
 		
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(textFieldBuscar.getText().equals("") 
+					) {
+					muestraDialogoConMensaje("Los Campos no deben de estar Vacios");
+				} else {
+					//convoca a recuperar el empleado y su puesto 
+					empleado=controlCheckIO.recuperarEmpleado(textFieldBuscar.getText());
+					puestoInicial=controlCheckIO.recuperaPuestoEmpleado(empleado);
+
+				}
+			}
+		});
+		
+		btnChecar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {			
+					controlCheckIO.addRegistro(empleado,
+							  (String) comboBoxRegistro.getSelectedItem());
+				
+			}
+		});
 	}
 	
-	public void muestra(ControlCheckIO controlCheckIO) {
+	public void muestra(ControlCheckIO controlCheckIO,List <Registro> registros) {
 		this.controlCheckIO=controlCheckIO;
+		textFieldBuscar.setText("");
+		textFieldNombre.setText("");
+		textFieldApellidoP.setText("");
+		textFieldApellidoM.setText("");
+		textFieldPuesto.setText("");
+		DefaultComboBoxModel <String> comboBoxModel =new DefaultComboBoxModel <>();
+		for(Registro registro:registros) {
+			comboBoxModel.addElement(registro.getNombre());
+		}
+		comboBoxRegistro.setModel(comboBoxModel);
 		setVisible(true);
+	}
+	
+	public void muestraEmpleadoRecuperado(Empleado empleado) {
+		puestoInicial=controlCheckIO.recuperaPuestoEmpleado(empleado);
+		textFieldNombre.setText(empleado.getNombre());
+		textFieldApellidoP.setText(empleado.getApellidoP());
+		textFieldApellidoM.setText(empleado.getApellidoM());
+		textFieldPuesto.setText(puestoInicial.getNombre());
+	}
+	public void muestraDialogoConMensaje(String mensaje ) {
+		JOptionPane.showMessageDialog(this , mensaje);
 	}
 
 }
