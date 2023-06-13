@@ -15,7 +15,7 @@ import mx.uam.ayd.proyecto.negocio.modelo.Producto;
  * Servicio utilizado para manejar la información de la base de datos referente
  * a los productos.
  * 
- * @author David
+ * @author David, Ian
  */
 
 @Slf4j

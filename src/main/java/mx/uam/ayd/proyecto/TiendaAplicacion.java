@@ -21,15 +21,9 @@ import mx.uam.ayd.proyecto.presentacion.inicio.ControlInicio;
 @SpringBootApplication
 public class TiendaAplicacion {
 	
-	/**
-	 *  Control principal del programa "Menú"
-	 */
 	@Autowired
 	ControlInicio controlInicio;
 	
-	/**
-	 *  Repositorio de Categoria usado para inicializar datos utilitarios
-	 */
 	@Autowired
 	CategoriaRepository categoriaRepositorio;
 	

@@ -60,6 +60,13 @@
 			<optional>true</optional>
 		</dependency>
 
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- Servidor Web -->
 		<dependency>
       		<groupId>org.springframework.boot</groupId>
