@@ -8,6 +8,12 @@ import mx.uam.ayd.proyecto.presentacion.inventario.agregarCategoria.ControlAgreg
 import mx.uam.ayd.proyecto.presentacion.inventario.agregarProducto.ControlAgregarProducto;
 import mx.uam.ayd.proyecto.presentacion.inventario.mostrarHistorial.ControlHistorialVenta;
 
+/**
+ * Esta clase contiene los metodos para manipular y acceder a los diferentes controles
+ * que abarcan la sección de inventario como "ControlCategoria", "ControlProducto" y "ControlHistorial"
+ * 
+ * @author David
+ */
 @Component
 public class ControlInventario {
 	
@@ -24,29 +30,46 @@ public class ControlInventario {
 	private ServicioProducto servicioProducto;
 	
 	@Autowired
-	private VentanaInventario ventanaI;
+	private VentanaInventario ventanaInventario;
+	
+	/**
+	 * Prepara y muestra la ventana de Inventario
+	 */
 	
 	public void inicia() {
-		ventanaI.muestraContenido(this);
+		controlCategoria.inicio();
+		ventanaInventario.muestraContenido(this);
 	}
 	
-	public void agregaCategoria() {
-		controlCategoria.inicio();	
-	}
+	/**
+	 * Llama y prepara el control de Producto para argegar Productos
+	 */
 	
-	public void agregaProducto() {
+	public void iniciaControlProducto() {
 		controlProducto.inicio();
 	}
+	
+	/**
+	 * Llama y prepara el control de historial de venta 
+	 */
 	
 	public void muestraHistorialVenta() {
 		controlHistorial.inicio();
 	}
 	
+	/**
+	 * Solicita al servicio de productos la informacion completa de los productos en forma de tabla
+	 * 
+	 * @return Tabla de todos los productos registrados
+	 */
 	public Object[][] recuperaTablaProductos() {
 		return servicioProducto.recuperaTablaDeProductos();
 	}
 	
+	/**
+	 * Finaliza y cierra la ventana referente al Inventario
+	 */
 	public void finalizaControlInventario() {
-		ventanaI.dispose();
+		ventanaInventario.dispose();
 	}
 }

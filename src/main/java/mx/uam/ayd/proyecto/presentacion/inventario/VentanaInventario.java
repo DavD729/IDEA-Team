@@ -17,6 +17,14 @@ import javax.swing.table.TableRowSorter;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Ventana que muestra las funcionalidades al usuario como el registro de productos,
+ * la visualización del inventario y la funcion del historial de ventas.
+ * 
+ * @author David
+ *
+ */
+
 @Component
 @SuppressWarnings("all")
 public class VentanaInventario extends JFrame {
@@ -57,7 +65,7 @@ public class VentanaInventario extends JFrame {
 		
 		JButton btnRegistra = new JButton("Registrar Producto");
 		btnRegistra.addActionListener(actionEvent -> {
-			controlInventario.agregaProducto();
+			controlInventario.iniciaControlProducto();
 		});
 		btnRegistra.setBounds(15, 520, 150, 29);
 		panelContenido.add(btnRegistra);

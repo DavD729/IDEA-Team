@@ -29,6 +29,14 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.toedter.calendar.JDateChooser;
 
+/**
+ * Ventana que permite al usuario la visualización de la información
+ * referente a los historiales de venta.
+ * Opera con el control "HistorialVenta"
+ * 
+ * @author David
+ */
+
 @Component
 @SuppressWarnings("serial")
 public class VentanaHistorialVenta extends JFrame {

@@ -25,6 +25,13 @@ import org.springframework.stereotype.Component;
 import mx.uam.ayd.proyecto.negocio.modelo.Categoria;
 import mx.uam.ayd.proyecto.presentacion.inventario.agregarCategoria.ControlAgregarCategoria;
 
+/**
+ * Ventana que permite al usuario registrar productos a travez de esta interfaz grafica,
+ * opera con los controles "AgregarProducto" y "AgregarCategoria"
+ * 
+ * @author David
+ */
+
 @Component
 @SuppressWarnings("serial")
 public class VentanaAgregarProducto extends JFrame {
@@ -123,14 +130,14 @@ public class VentanaAgregarProducto extends JFrame {
 			
 			if(hayCuadrosVacios(List.of(textFieldProducto, textFieldCategoria, textFieldCantidad, textFieldPrecio, areaDescripcion))) return;
 			
-			if(esInformacionValida()) {
-				if(muestraDialogoDeConfirmacion(String.format("El producto %s con cantidad: %s, y Precio: %s, está por ser registrado en: %s, ¿Desea continuar?", textFieldProducto.getText(), textFieldCantidad.getText(), textFieldPrecio.getText(), textFieldCategoria.getText())) == 0) {
-					
-					if(revisaPosiblesExistencias(textFieldProducto.getText())) {
-						if(muestraAdvertenciaDeConfirmacion(String.format("Existen similitudes de %s en inventario, quiere continuar registro?", textFieldProducto.getText())) == 0) registraDatos();
-					} else {
-						registraDatos();
-					}
+			if(hayInformacionInvalida()) return;
+			
+			if(muestraDialogoDeConfirmacion(String.format("El producto %s con cantidad: %s, y Precio: %s, está por ser registrado en: %s, ¿Desea continuar?", textFieldProducto.getText(), textFieldCantidad.getText(), textFieldPrecio.getText(), textFieldCategoria.getText())) == 0) {
+				
+				if(revisaPosiblesExistencias(textFieldProducto.getText())) {
+					if(muestraAdvertenciaDeConfirmacion(String.format("Existen similitudes de %s en inventario, quiere continuar registro?", textFieldProducto.getText())) == 0) registraDatos();
+				} else {
+					registraDatos();
 				}
 			}
 		});
@@ -202,19 +209,19 @@ public class VentanaAgregarProducto extends JFrame {
 		return false;
 	}
 	
-	private boolean esInformacionValida() {
+	private boolean hayInformacionInvalida() {
 		String comprobar;
 		
 		comprobar = textFieldProducto.getText();
 		if(comprobar.length() > 60) {
 			muestraErrorConMensaje(String.format("El campo %s contiene demasiados datos", textFieldProducto.getToolTipText()));
-			return false;
+			return true;
 		}
 		
 		comprobar = textFieldCategoria.getText().toLowerCase();
 		if(comprobar.equals("otra") || comprobar.equals("categoria")) {
 			muestraErrorConMensaje(String.format("El campo %s tiene una categoria invalida", textFieldCategoria.getToolTipText()));
-			return false;
+			return true;
 		}
 		
 		comprobar = textFieldCantidad.getText();
@@ -222,7 +229,7 @@ public class VentanaAgregarProducto extends JFrame {
 			if(Float.parseFloat(comprobar) < 0) throw new NumberFormatException("Negative value");
 		} catch (NumberFormatException e) {
 			muestraErrorConMensaje(String.format("El campo %s contiene datos no numericos o son negativos", textFieldCantidad.getToolTipText()));
-			return false;
+			return true;
 		}
 		
 		comprobar = textFieldPrecio.getText();
@@ -230,20 +237,20 @@ public class VentanaAgregarProducto extends JFrame {
 			if(Float.parseFloat(comprobar) < 0) throw new NumberFormatException("Negative value");
 		} catch (NumberFormatException e) {
 			muestraErrorConMensaje(String.format("El campo %s contiene datos no numericos o son negativos", textFieldPrecio.getToolTipText()));
-			return false;
+			return true;
 		}
 		
 		comprobar = areaDescripcion.getText();
 		if(comprobar.length() > 400) {
 			muestraErrorConMensaje(String.format("El campo %s contiene demasiados datos", areaDescripcion.getToolTipText()));
-			return false;
+			return true;
 		}
 		
-		return true;
+		return false;
 	}
 	
 	private boolean revisaPosiblesExistencias(String nombre) {
-		return controlProducto.revisaExistenciaProducto(nombre);
+		return controlProducto.hayExistenciasDeProductos(nombre);
 	}
 	
 	private boolean registraDatos() {
