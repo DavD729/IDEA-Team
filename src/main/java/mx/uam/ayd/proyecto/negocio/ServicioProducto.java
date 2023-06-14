@@ -11,6 +11,13 @@ import mx.uam.ayd.proyecto.datos.CategoriaRepository;
 import mx.uam.ayd.proyecto.datos.ProductoRepository;
 import mx.uam.ayd.proyecto.negocio.modelo.Producto;
 
+/**
+ * Servicio utilizado para manejar la información de la base de datos referente
+ * a los productos.
+ * 
+ * @author David, Ian
+ */
+
 @Slf4j
 @Service
 public class ServicioProducto {
@@ -68,14 +75,12 @@ public class ServicioProducto {
 	 * @param descripcion Información extra del producto
 	 * @return Producto registrado
 	 */
+	
 	public Producto agregaProducto(String nombre, String categoria, int cantidad, double precio, String descripcion) {
-		if(productoRepository.findByNombre(nombre) != null) {
-			throw new IllegalArgumentException("El producto ya se encuentra en Inventario");
-		}
-		
 		if(categoriaRepository.findByNombre(categoria) == null) {
 			throw new IllegalArgumentException("La categoria dada, no es válida");
 		}
+		
 		log.info("Producto por agregar: " + nombre);
 		
 		Producto producto = new Producto();
@@ -87,6 +92,17 @@ public class ServicioProducto {
 		
 		productoRepository.save(producto);
 		return producto;
+	}
+	
+	/**
+	 * Solicita al repositorio la busqueda de los productos que contengan el nombre solicitado
+	 * 
+	 * @param nombre Nombre de los productos que esten registrados
+	 * @return Lista de todos los productos registrados con ese nombre (puede estar vacia)
+	 */
+	
+	public List<Producto> buscaExistenciasDeProducto(String nombre) {
+		return productoRepository.findByNombre(nombre);
 	}
 	
 	/**

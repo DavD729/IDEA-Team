@@ -1,4 +1,4 @@
-package mx.uam.ayd.proyecto.exception;
+package mx.uam.ayd.proyecto.util.exception;
 
 public class RangoInvalidoException extends Exception {
     /**

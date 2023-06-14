@@ -1,5 +1,6 @@
 package mx.uam.ayd.proyecto.presentacion.inventario;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -16,13 +17,18 @@ import javax.swing.table.TableRowSorter;
 
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
+/**
+ * Ventana que muestra las funcionalidades al usuario como el registro de productos,
+ * la visualización del inventario y la funcion del historial de ventas.
+ * 
+ * @author David
+ *
+ */
 
-@Slf4j
 @Component
 @SuppressWarnings("all")
 public class VentanaInventario extends JFrame {
-	private ControlInventario controlI;
+	private ControlInventario controlInventario;
 	private JPanel panelContenido;
 	private JTable tablaInventario;
 	private TableRowSorter reordenador;
@@ -44,53 +50,49 @@ public class VentanaInventario extends JFrame {
 				return false;
 			}
 		};
+		
 		reordenador = new TableRowSorter<>(tablaInventario.getModel());
 		tablaInventario.setRowSorter(reordenador);
 		scrollTable = new JScrollPane(tablaInventario);
-		scrollTable.setBounds(30, 30, 625, 480);
+		scrollTable.setBounds(30, 50, 625, 460);
 		panelContenido.add(scrollTable);
 		
-		JLabel etiqueta = new JLabel("Inventario");
-		etiqueta.setBounds(15, 5, 440, 16);
-		panelContenido.add(etiqueta);
+		JLabel lblTitulo = new JLabel("Inventario");
+		Font fuenteTitulo = new Font("Arial", Font.BOLD, 18);
+		lblTitulo.setBounds(30, 15, 440, 20);
+		lblTitulo.setFont(fuenteTitulo);
+		panelContenido.add(lblTitulo);
 		
 		JButton btnRegistra = new JButton("Registrar Producto");
-		btnRegistra.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controlI.agregaProducto();
-			}
+		btnRegistra.addActionListener(actionEvent -> {
+			controlInventario.iniciaControlProducto();
 		});
 		btnRegistra.setBounds(15, 520, 150, 29);
 		panelContenido.add(btnRegistra);
 		
 		JButton btnHistorial= new JButton("Historial de ventas");
-		btnHistorial.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				log.info("Action Historial");
-				log.info("WIP HU-09");
-			}
+		btnHistorial.addActionListener(actionEvent -> {
+			controlInventario.muestraHistorialVenta();
 		});
 		btnHistorial.setBounds(180, 520, 150, 29);
 		panelContenido.add(btnHistorial);
 		
 		JButton btnRegresa = new JButton("Regresar");
-		btnRegresa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controlI.finalizaControlInventario();
-			}
+		btnRegresa.addActionListener(actionEvent -> {
+			controlInventario.finalizaControlInventario();
 		});
 		btnRegresa.setBounds(550, 520, 120, 29);
 		panelContenido.add(btnRegresa);
 	}
 	
 	public void muestraContenido(ControlInventario control) {
-		this.controlI = control;
+		this.controlInventario = control;
 		this.updateTable();
 		this.setVisible(true);
 	}
 	
 	public void updateTable() {
-		this.tablaInventario.setModel(new DefaultTableModel(controlI.recuperaTablaProductos(), encabezados.toArray()));
+		this.tablaInventario.setModel(new DefaultTableModel(controlInventario.recuperaTablaProductos(), encabezados.toArray()));
 		reordenador = new TableRowSorter<>(tablaInventario.getModel());
 		tablaInventario.setRowSorter(reordenador);
 	}

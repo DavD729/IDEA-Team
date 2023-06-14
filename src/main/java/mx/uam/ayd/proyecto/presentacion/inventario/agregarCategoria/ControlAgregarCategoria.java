@@ -42,21 +42,26 @@ public class ControlAgregarCategoria {
 	/**
 	 * Registra una nueva categoria a la base de datos usando su "Nombre"
 	 * 
-	 * @param nombre 
-	 * Nombre de la categoria a registrar
+	 * @param nombre Nombre de la categoria a registrar
 	 * 
-	 * @return
-	 * Si la categoria fue registrada o no
+	 * @return Si la categoria fue registrada o no
 	 */
 	public boolean registraCategoria(String nombre) {
 		try {
 			servicioCategoria.registraCategoria(nombre);
 		} catch(IllegalArgumentException e) {
-			ventanaProducto.muestraErrorConMensaje("La categoria no puede ser creada, los argumentos no son Validos, " + e.getMessage());
+			ventanaProducto.muestraErrorConMensaje("La categoria no puede ser creada, los argumentos no son Validos");
 			return false;
 		}
 		return true;
 	}
+	
+	/**
+	 * Solicita al servicio Categoria, la busqueda de una Categoria registrada usando su nombre
+	 * 
+	 * @param nombre Nombre de la Categoria a Buscar.
+	 * @return Categoria encontrada dentro del repositorio o un nulo
+	 */
 	
 	@Nullable
 	public Categoria dameCategoria(String nombre) {
