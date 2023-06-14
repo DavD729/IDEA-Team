@@ -56,6 +56,13 @@ public class ControlAgregarCategoria {
 		return true;
 	}
 	
+	/**
+	 * Solicita al servicio Categoria, la busqueda de una Categoria registrada usando su nombre
+	 * 
+	 * @param nombre Nombre de la Categoria a Buscar.
+	 * @return Categoria encontrada dentro del repositorio o un nulo
+	 */
+	
 	@Nullable
 	public Categoria dameCategoria(String nombre) {
 		return servicioCategoria.dameCategoria(nombre);

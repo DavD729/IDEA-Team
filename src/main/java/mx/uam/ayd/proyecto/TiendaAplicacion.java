@@ -1,6 +1,7 @@
 package mx.uam.ayd.proyecto;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 
 import javax.annotation.PostConstruct;
 
@@ -9,12 +10,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import mx.uam.ayd.proyecto.datos.CategoriaRepository;
+import mx.uam.ayd.proyecto.datos.HistorialVentaRepository;
 import mx.uam.ayd.proyecto.datos.ProductoRepository;
 import mx.uam.ayd.proyecto.datos.PuestoRepository;
+import mx.uam.ayd.proyecto.datos.RelacionVentaProductoRepository;
 import mx.uam.ayd.proyecto.datos.VentaRepository;
 import mx.uam.ayd.proyecto.negocio.modelo.Categoria;
+import mx.uam.ayd.proyecto.negocio.modelo.HistorialVenta;
 import mx.uam.ayd.proyecto.negocio.modelo.Producto;
 import mx.uam.ayd.proyecto.negocio.modelo.Puesto;
+import mx.uam.ayd.proyecto.negocio.modelo.RelacionProductoValor;
 import mx.uam.ayd.proyecto.negocio.modelo.Venta;
 import mx.uam.ayd.proyecto.presentacion.inicio.ControlInicio;
 
@@ -35,6 +40,12 @@ public class TiendaAplicacion {
 	
 	@Autowired
 	VentaRepository ventaRepository;
+	
+	@Autowired
+	HistorialVentaRepository historialVentaRepository;
+	
+	@Autowired
+	RelacionVentaProductoRepository ProductoVentaRepository;
 	
 	public static void main(String[] args) {
 		SpringApplicationBuilder builder = new SpringApplicationBuilder(TiendaAplicacion.class);
@@ -129,6 +140,22 @@ public class TiendaAplicacion {
 		prod10.setCategoria("Electrodomesticos");
 		prod10.setDescripcion("Cusinart, 5lt, Garantia 6 meses");
 		productoRepositorio.save(prod10);
+		
+		HistorialVenta historial = new HistorialVenta();
+		historial.setFecha(YearMonth.of(2023, 5));
+		historialVentaRepository.save(historial);
+		
+		RelacionProductoValor relacionA = new RelacionProductoValor();
+		relacionA.setProducto(1l);
+		relacionA.setCantidadVendida(23);
+		relacionA.setRelacion(historial.getIdHistorial());
+		ProductoVentaRepository.save(relacionA);
+		
+		RelacionProductoValor relacionB = new RelacionProductoValor();
+		relacionB.setProducto(5l);
+		relacionB.setCantidadVendida(3);
+		relacionB.setRelacion(historial.getIdHistorial());
+		ProductoVentaRepository.save(relacionB);
 		
 		Puesto puestoAdmin = new Puesto();
 		puestoAdmin.setNombre("Administrador");

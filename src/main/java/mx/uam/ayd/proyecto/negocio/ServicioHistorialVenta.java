@@ -1,19 +1,17 @@
 package mx.uam.ayd.proyecto.negocio;
 
 import java.time.YearMonth;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.uam.ayd.proyecto.datos.HistorialVentaRepository;
+import mx.uam.ayd.proyecto.datos.ProductoRepository;
+import mx.uam.ayd.proyecto.datos.RelacionVentaProductoRepository;
 import mx.uam.ayd.proyecto.negocio.modelo.HistorialVenta;
 import mx.uam.ayd.proyecto.negocio.modelo.Producto;
-import mx.uam.ayd.proyecto.negocio.modelo.Venta;
+import mx.uam.ayd.proyecto.negocio.modelo.RelacionProductoValor;
 
 /**
  * Clase con todas las funcionalidades respectivas al manejo de los historiales de venta
@@ -26,56 +24,69 @@ import mx.uam.ayd.proyecto.negocio.modelo.Venta;
 public class ServicioHistorialVenta {
 	
 	@Autowired
+	ProductoRepository repositorioProducto;
+	
+	@Autowired
 	HistorialVentaRepository repositorioHistorial;
 	
-	/**
-	 * Recupera el historial de ventas.
-	 * 
-	 * @return Una lista de objetos HistorialVenta que representa el historial de ventas.
-	 */
-	
-	public List<HistorialVenta> recuperaHistorialVentas() {
-		List<HistorialVenta> historiales = new ArrayList<>();
-		repositorioHistorial.findAll().forEach(historial -> {
-			historiales.add(historial);
-		});
-		return historiales;
-	}
+	@Autowired
+	RelacionVentaProductoRepository repositorioProductoVenta;
 	
 	/**
-	 * Recupera o crea un historial de venta para una fecha específica.
+	 * Recupera el historial de venta para una fecha específica.
 	 * 
 	 * @param fecha La fecha para la cual se desea recuperar o crear el historial de venta.
 	 * @return Un objeto HistorialVenta para la fecha especificada.
 	 */
 	
-	public HistorialVenta recuperaOrCreaHistorial(YearMonth fecha) {
-		HistorialVenta historial = repositorioHistorial.findByFecha(fecha);
-		if(historial == null) {
-			historial = new HistorialVenta();
-			historial.setFecha(fecha);
-		}
-		return historial;
+	public HistorialVenta recuperaHistorial(YearMonth fecha) {
+		return repositorioHistorial.findByFecha(fecha);
 	}
 	
 	/**
-	 * Agrega una venta al historial de ventas existente o crea un nuevo historial para la fecha de la venta.
+	 * Crea el historial de ventas para la fecha de venta solicitada.
 	 * 
-	 * @param venta La venta que se va a agregar al historial.
-	 * @param relacionVenta Un mapa que contiene la relación de productos vendidos y la cantidad vendida.
+	 * @param fecha Fecha del historial que abarcara las ventas del Mes/Año.
+	 * @return El Historial de Ventas para la fecha solicitada
 	 */
 	
-	public void agregaVentaDeHistorial(Venta venta, Map<Producto, Integer> relacionVenta) {
-		YearMonth fecha = YearMonth.of(venta.getDate().getYear(), venta.getDate().getMonth());
-		HistorialVenta historial = recuperaOrCreaHistorial(fecha);
-		relacionVenta.forEach((producto, cantidadVendidos) -> {
-			int value = historial.getProductosVendidos().getOrDefault(producto, -1);
-			if(value != -1) {
-				value += cantidadVendidos;
-			} else {
-				historial.getProductosVendidos().put(producto, cantidadVendidos);
+	public HistorialVenta creaHistorial(YearMonth fecha) {
+		HistorialVenta historialVenta = recuperaHistorial(fecha);
+		if(historialVenta != null) throw new IllegalArgumentException("El historial ya existe en el Repositorio");
+		historialVenta = new HistorialVenta();
+		historialVenta.setFecha(fecha);
+		
+		repositorioHistorial.save(historialVenta);
+		
+		return historialVenta;
+	}
+	
+	/**
+	 * Solicita al repositorio un Historial de venta existente para una fecha especifica con
+	 * el fin de agregar una venta de ese Mes.
+	 * 
+	 * @param fecha Fecha del historial a Buscar
+	 * @param producto Producto del cual se realizó una venta
+	 * @param vendidos Cantidad de los productos vendidos
+	 */
+	
+	public void agregaVentaDeHistorial(YearMonth fecha, Producto producto, int vendidos) {
+		HistorialVenta historial = recuperaHistorial(fecha);
+		if(historial == null) throw new IllegalArgumentException("El historial solicitado no existe");
+		
+		for (RelacionProductoValor venta : repositorioProductoVenta.findByRelacion(historial.getIdHistorial())) {
+			if (repositorioProducto.findById(venta.getProducto()).get() == producto) {
+				venta.setCantidadVendida(venta.getCantidadVendida() + vendidos);
+				repositorioProductoVenta.save(venta);
+				return;
 			}
-		});
+		}
+		
+		RelacionProductoValor venta = new RelacionProductoValor();
+		venta.setProducto(producto.getIdProducto());
+		venta.setCantidadVendida(vendidos);
+		venta.setRelacion(historial.getIdHistorial());
+		repositorioProductoVenta.save(venta);
 	}
 	
 	/**
@@ -86,16 +97,19 @@ public class ServicioHistorialVenta {
 	 */
 	
 	public String[][] recuperaTablaDeDatosPorFecha(YearMonth fecha) {
-		HistorialVenta historial = recuperaOrCreaHistorial(fecha);
-		Map<Producto, Integer> datos = historial.getProductosVendidos();
+		HistorialVenta historial = recuperaHistorial(fecha);
+		if(historial == null) historial = creaHistorial(fecha);
+		
+		List<RelacionProductoValor> datos = repositorioProductoVenta.findByRelacion(historial.getIdHistorial());
 		String[][] matrizDeDatos = new String[datos.size()][3];
-		Set<Producto> productos = datos.keySet();
-		Collection<Integer> vendidos = datos.values();
-		for(int index = 0; index < datos.size() && index < 20; index++) {
-			matrizDeDatos[index][0] = ((Producto)productos.toArray()[index]).getNombre();
-			matrizDeDatos[index][1] = vendidos.toArray()[index].toString();
-			matrizDeDatos[index][2] = String.valueOf(((Producto)productos.toArray()[index]).getIdProducto());
+		
+		for (int index = 0; index < datos.size() && index < 20; index++) {
+			Producto producto = repositorioProducto.findById(datos.get(index).getProducto()).get();
+			matrizDeDatos[index][0] = producto.getNombre();
+			matrizDeDatos[index][1] = String.valueOf(datos.get(index).getCantidadVendida());
+			matrizDeDatos[index][2] = String.valueOf(producto.getIdProducto());
 		}
+		
 		return matrizDeDatos;
 	}
 }
