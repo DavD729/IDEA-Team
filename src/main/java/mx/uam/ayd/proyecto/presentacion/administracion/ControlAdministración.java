@@ -38,7 +38,7 @@ public class ControlAdministración {
 	}
 
 
-	//Inicia el flujo de la venatan Agregar Empleado
+	/*Inicia el flujo de la venatan Agregar Empleado*/
 	public void AddEmpleado() {
 		controlAddEmpleado.inicia();
 	}
@@ -48,9 +48,13 @@ public class ControlAdministración {
 		controlActualizarEmpleado.inicia();
 	}
 	
-	//Inicia el flujo de la venatan CheckIO
+	/*Inicia el flujo de la venatan CheckIO*/
 	public void CheckIO() {
 		controlCheckIO.inicia();
+	}
+	
+	public void termina() {
+		ventana.setVisible(false);		
 	}
 
 }

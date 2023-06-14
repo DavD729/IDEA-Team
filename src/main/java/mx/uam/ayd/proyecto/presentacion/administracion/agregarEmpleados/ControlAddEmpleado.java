@@ -23,7 +23,7 @@ public class ControlAddEmpleado {
 	@Autowired
 	private ServicioEmpleado servicioEmpleado;
 	
-	//Inicia el flujo para agregar un empleado de acuerdo al tipo de puesto que le corresponde
+	/*Inicia el flujo para agregar un empleado de acuerdo al tipo de puesto que le corresponde*/
 	public void inicia() {
 		List <Puesto> puestos= servicioPuesto.recuperaPuestos();
 		ventanaAddEmpleado.muestra(this, puestos);

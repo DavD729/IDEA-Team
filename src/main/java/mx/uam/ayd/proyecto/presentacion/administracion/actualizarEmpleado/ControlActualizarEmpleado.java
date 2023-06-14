@@ -27,7 +27,7 @@ public class ControlActualizarEmpleado {
 		ventanaActualizarEmpleado.muestra(this);
 	}
 	
-	// Control para Recuperar el empleado sobre el que se trabajara
+	/* Control para Recuperar el empleado sobre el que se trabajara*/
 	public Empleado recuperarEmpleado(String email) {
 		 List <Puesto> puestos= servicioPuesto.recuperaPuestos();
 		 Empleado empleado=servicioEmpleado.recuperarEmpleado(email);	
@@ -35,7 +35,7 @@ public class ControlActualizarEmpleado {
 		 return empleado;
 	}
 	
-	// Control para actualizar datos del Empleado
+	/* Control para actualizar datos del Empleado*/
 	public void actualizarEmpleado(Empleado empleado,Puesto puesto,String nombre,
 			String ApellidoP, 
 			String ApellidoM,
@@ -53,14 +53,14 @@ public class ControlActualizarEmpleado {
 		termina();		
 	}
 	
-	//Control para recuperar el grupo el Puesto al que pertenece el empleado
+	/*Control para recuperar el grupo el Puesto al que pertenece el empleado*/
 	public Puesto recuperaPuestoEmpleado(Empleado empleado) {
 		List <Puesto> puestos= servicioPuesto.recuperaPuestos();
 		Puesto puesto=servicioEmpleado.recuperaPuestoEmpleado(empleado, puestos);
 		return puesto;
 	}
 	
-	//Finaliza la funcion  Actualizar Empleado
+	/*Finaliza la funcion  Actualizar Empleado*/
 	public void termina() {
 		ventanaActualizarEmpleado.setVisible(false);
 	}

@@ -1,6 +1,7 @@
 package mx.uam.ayd.proyecto.negocio.modelo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -19,26 +20,23 @@ import lombok.Data;
 public class Registro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	/*Atributos*/
 	private long idRegistro;
 	private String nombre;
 
-	@OneToMany(targetEntity=Empleado.class,fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
+	/*Crea el atributo Registro en la tabla de la entidad Tiempo*/
+	@OneToMany(targetEntity=Tiempo.class,fetch=FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)	
 	@JoinColumn(name="idRegistro")
-	
-	//Recupera la lista de Empleados agregados en la base de Datos
-		private final List<Empleado> empleados=new ArrayList <> ();
-	
-	//Valida que no se este agragando un empleado sin datos
-	public boolean addEmpleado(Empleado empleado) {
-		if(empleado==null) {
-			throw new IllegalArgumentException("El usuario no puede ser null ");	
-		}
+
+			private final List<Tiempo> tiempos=new ArrayList <> ();
 		
-		//if(empleados.contains(empleado)) {
-			//Checa si el empleado esta en el grupo
-			//return false;
-		//	}
-		return empleados.add(empleado);
-	}
-	
+		/*Valida que no se este agragando un tiempo en el Registro*/
+		public boolean addTiempo(Tiempo tiempo) {
+			if(tiempo==null) {
+				throw new IllegalArgumentException("El usuario no puede ser null ");	
+			}
+			
+			return tiempos.add(tiempo);
+		}
+
 }
