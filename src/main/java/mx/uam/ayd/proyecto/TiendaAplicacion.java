@@ -13,6 +13,7 @@ import mx.uam.ayd.proyecto.datos.CategoriaRepository;
 import mx.uam.ayd.proyecto.datos.HistorialVentaRepository;
 import mx.uam.ayd.proyecto.datos.ProductoRepository;
 import mx.uam.ayd.proyecto.datos.PuestoRepository;
+import mx.uam.ayd.proyecto.datos.RegistroRepository;
 import mx.uam.ayd.proyecto.datos.RelacionVentaProductoRepository;
 import mx.uam.ayd.proyecto.datos.VentaRepository;
 import mx.uam.ayd.proyecto.negocio.modelo.Categoria;
@@ -37,6 +38,9 @@ public class TiendaAplicacion {
 	
 	@Autowired
 	PuestoRepository puestoRepository;
+	
+	@Autowired
+	RegistroRepository registroRepository;
 	
 	@Autowired
 	VentaRepository ventaRepository;
