@@ -13,29 +13,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-
-
-@Entity
-@Data
 @Getter
 @Setter
-public class Empleado {
+@Entity
+@Data
+public class Tiempo {
+	/*Atributos de la entidad Tiempo*/
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	/*Atributos de la entidad Empleto*/
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long idTiempo;
 	private long idEmpleado;
-	private long idEntrada;
-	private long idSalida;
-	private String nombre;
-	private String apellidoP;
-	private String apellidoM;
-	private String direccion;
-	private String tel;
-	private String email;
-	private String tarea;		
+	private String anio;
+	private String mes;
+	private String dia;
+	private String hora;
+	private String min;
+	private String segundos;	
 }

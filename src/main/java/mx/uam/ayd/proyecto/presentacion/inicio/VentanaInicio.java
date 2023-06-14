@@ -32,7 +32,7 @@ public class VentanaInicio extends JFrame {
 	
 	public VentanaInicio() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBounds(130, 130, 225, 285);
+		this.setBounds(130, 100, 225, 285);
 		panelContenido = new JPanel();
 		panelContenido.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(panelContenido);
