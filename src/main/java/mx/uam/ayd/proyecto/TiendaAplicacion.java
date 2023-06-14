@@ -21,6 +21,7 @@ import mx.uam.ayd.proyecto.negocio.modelo.HistorialVenta;
 import mx.uam.ayd.proyecto.negocio.modelo.Producto;
 import mx.uam.ayd.proyecto.negocio.modelo.Puesto;
 import mx.uam.ayd.proyecto.negocio.modelo.RelacionProductoValor;
+import mx.uam.ayd.proyecto.negocio.modelo.Registro;
 import mx.uam.ayd.proyecto.negocio.modelo.Venta;
 import mx.uam.ayd.proyecto.presentacion.inicio.ControlInicio;
 
@@ -168,6 +169,15 @@ public class TiendaAplicacion {
 		Puesto puestoVendedor = new Puesto();
 		puestoVendedor.setNombre("Vendedor");
 		puestoRepository.save(puestoVendedor);
+		
+		Registro registroEntrada = new Registro();
+		registroEntrada.setNombre("Entrando");
+		registroRepository.save(registroEntrada);
+		
+		Registro registroSalida = new Registro();
+		registroSalida.setNombre("Saliendo");
+		registroRepository.save(registroSalida);
+		
 		
 		//Inicia la inicialización de la BD para ventas
 		LocalDate Fecha = LocalDate.now();

@@ -3,7 +3,7 @@ package mx.uam.ayd.proyecto.presentacion.inicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import mx.uam.ayd.proyecto.presentacion.abastecimiento.Control_vista;
+import mx.uam.ayd.proyecto.presentacion.abastecimiento.ControlAbastecimiento;
 import mx.uam.ayd.proyecto.presentacion.administracion.ControlAdministración;
 import mx.uam.ayd.proyecto.presentacion.corte.ControlGuardaGanancias;
 import mx.uam.ayd.proyecto.presentacion.inventario.ControlInventario;
@@ -22,7 +22,7 @@ public class ControlInicio {
 	private ControlAdministración controlAdministracion;
 	
 	@Autowired
-	private Control_vista controlAbastecimiento;
+	private ControlAbastecimiento controlAbastecimiento;
 	
 	@Autowired
 	private ControlInventario controlInv;
