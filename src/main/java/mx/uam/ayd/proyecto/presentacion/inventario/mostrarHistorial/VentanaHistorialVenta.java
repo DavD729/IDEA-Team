@@ -7,6 +7,9 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -168,6 +171,7 @@ public class VentanaHistorialVenta extends JFrame {
 		this.fechaPrevia = YearMonth.now();
 		this.tablaInventario.setModel(new DefaultTableModel(controlHistorialVenta.recuperaTabla(fechaPrevia), encabezados.toArray()));
 		this.seleccionadorFecha.setDate(Date.valueOf(LocalDate.now()));
+		this.ordenaTabla();
 	}
 	
 	private void actualizaTabla() {
@@ -177,6 +181,34 @@ public class VentanaHistorialVenta extends JFrame {
 		if(cambio.compareTo(fechaPrevia) != 0) {
 			tablaInventario.setModel(new DefaultTableModel(controlHistorialVenta.recuperaTabla(cambio),encabezados.toArray()));
 			fechaPrevia = cambio;
+			this.ordenaTabla();
+		}
+	}
+	
+	private void ordenaTabla() {
+		DefaultTableModel modelo = (DefaultTableModel) tablaInventario.getModel();
+		
+		List<Object[]> datos = new ArrayList<>();
+		for (int fila = 0; fila < modelo.getRowCount(); fila++) {
+			Object[] filaDatos = new Object[modelo.getColumnCount()];
+			for (int columna = 0; columna < modelo.getColumnCount(); columna++) {
+				filaDatos[columna] = modelo.getValueAt(fila, columna);
+			}
+			datos.add(filaDatos);
+		}
+		
+		Collections.sort(datos, new Comparator<Object[]>() {
+			@Override
+			public int compare(Object[] fila1, Object[] fila2) {
+				int cantidad1 = Integer.valueOf((String) fila1[1]);
+				int cantidad2 =  Integer.valueOf((String) fila2[1]);
+				return cantidad2 - cantidad1; // Orden descendente
+			}
+		});
+		
+		modelo.setRowCount(0); // Limpiar filas existentes
+		for (Object[] filaDatos : datos) {
+			modelo.addRow(filaDatos);
 		}
 	}
 }

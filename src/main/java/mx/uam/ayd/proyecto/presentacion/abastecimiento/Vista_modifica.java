@@ -19,7 +19,7 @@ import javax.swing.table.TableRowSorter;
 
 import org.springframework.stereotype.Component;
 
-import mx.uam.ayd.proyecto.exception.RangoInvalidoException;
+import mx.uam.ayd.proyecto.util.exception.RangoInvalidoException;
 import mx.uam.ayd.proyecto.negocio.modelo.Producto;
 
 @Component
