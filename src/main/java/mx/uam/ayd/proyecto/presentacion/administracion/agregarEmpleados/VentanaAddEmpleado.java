@@ -41,7 +41,7 @@ public class VentanaAddEmpleado  extends JFrame {
 	public VentanaAddEmpleado() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(600, 100, 400, 490);
+		setBounds(600, 130, 400, 490);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

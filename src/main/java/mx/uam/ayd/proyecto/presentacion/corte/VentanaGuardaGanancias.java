@@ -589,7 +589,7 @@ public class VentanaGuardaGanancias extends JFrame{
 		tabbedPane.setBounds(92, 118, 383, 119);
 		getContentPane().add(tabbedPane);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setBounds(380, 160, 550, 450);
+		this.setBounds(380, 130, 550, 450);
 		getContentPane().setLayout(null);
 	}
 	

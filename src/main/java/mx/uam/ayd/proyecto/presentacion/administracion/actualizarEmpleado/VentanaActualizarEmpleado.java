@@ -47,7 +47,7 @@ public class VentanaActualizarEmpleado extends JFrame {
 	/*Estructura de la ventana Actualizar Empleado*/
 	public VentanaActualizarEmpleado() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(600, 100, 400, 560);
+		setBounds(600, 130, 400, 560);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

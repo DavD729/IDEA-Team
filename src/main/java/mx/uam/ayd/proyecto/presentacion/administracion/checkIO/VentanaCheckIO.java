@@ -59,7 +59,7 @@ public class VentanaCheckIO extends JFrame {
 	public VentanaCheckIO() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(600, 100, 480, 250);
+		setBounds(600, 130, 480, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

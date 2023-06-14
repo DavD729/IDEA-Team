@@ -24,7 +24,7 @@ public class VentanaAdministracion extends JFrame {
 	public VentanaAdministracion() {
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(355, 100, 240, 250);
+		setBounds(355, 130, 240, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
