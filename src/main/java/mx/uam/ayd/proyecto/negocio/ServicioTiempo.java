@@ -29,7 +29,7 @@ public class ServicioTiempo {
 	private static final String SALIDA="Saliendo";
 	
 	/*Servicio para agregar al empleado al registro del tiempo de entrada y salida del checador*/
-	public void agregarEmpleadoRegistroTiempo(Empleado empleado,String nombreRegistro,String anio,String mes,String dia,String hora,String min,String segundos) {
+	public Tiempo agregarEmpleadoRegistroTiempo(Empleado empleado,String nombreRegistro,String anio,String mes,String dia,String hora,String min,String segundos) {
 		/*Recupera el registro almacenado en la base de datos con el ingresado por el empleado*/		
 		Registro registro=registroRepository.findByNombre(nombreRegistro);
 		if(registro==null) {
@@ -53,6 +53,7 @@ public class ServicioTiempo {
 		empleadoRepository.save(empleado);
 		/*Le agrega un registro al tiempo*/
 		registro.addTiempo(tiempo);
-		registroRepository.save(registro);		
+		registroRepository.save(registro);	
+		return tiempo;
 	}
 }
