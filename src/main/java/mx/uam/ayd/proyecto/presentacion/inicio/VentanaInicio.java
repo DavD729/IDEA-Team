@@ -71,7 +71,7 @@ public class VentanaInicio extends JFrame {
 		// Sección ventas
 		JButton btnVentas = new JButton("Ventas");
 		btnVentas.addActionListener(actionEvent -> {
-			log.info("Action Ventas");
+			controlInicio.muestraContenidoVenta();
 		});
 		btnVentas.setBounds(15, 195, 178, 29);
 		panelContenido.add(btnVentas);

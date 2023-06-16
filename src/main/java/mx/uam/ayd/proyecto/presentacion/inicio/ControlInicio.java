@@ -7,6 +7,7 @@ import mx.uam.ayd.proyecto.presentacion.abastecimiento.ControlAbastecimiento;
 import mx.uam.ayd.proyecto.presentacion.administracion.ControlAdministración;
 import mx.uam.ayd.proyecto.presentacion.corte.ControlGuardaGanancias;
 import mx.uam.ayd.proyecto.presentacion.inventario.ControlInventario;
+import mx.uam.ayd.proyecto.presentacion.menuOnline.ControlMenuOnline;
 
 /**
  * Control del Menú principal del programa, este controla los movimientos y usos
@@ -25,7 +26,10 @@ public class ControlInicio {
 	private ControlAbastecimiento controlAbastecimiento;
 	
 	@Autowired
-	private ControlInventario controlInv;
+	private ControlInventario controlInventario;
+	
+	@Autowired
+	private ControlMenuOnline controlVenta;
 	
 	@Autowired
 	private ControlGuardaGanancias controlCorte;
@@ -46,7 +50,11 @@ public class ControlInicio {
 	}
 	
 	public void muestraContenidoInventario() {
-		controlInv.inicia();
+		controlInventario.inicia();
+	}
+	
+	public void muestraContenidoVenta() {
+		controlVenta.inicia();
 	}
 	
 	public void muestraContenidoCorte() {

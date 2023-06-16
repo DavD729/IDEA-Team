@@ -106,41 +106,23 @@ public class ServicioProducto {
 		return productoRepository.findByNombre(nombre);
 	}
 	
+	/**
+	 * Solicita al repositorio la busqueda de un producto usando su ID conocida
+	 * 
+	 * @param id ID del producto a Buscar
+	 * @return Producto registrado en la base de datos o nulo
+	 */
+	
 	public Optional<Producto> buscaProducto(long id) {
 		return productoRepository.findById(id);
 	}
 	
 	/**
-	 * Ian - Integration
-	 */
-	
-	/**
-	 * Devuelve los datos de los productos registrados actuales en forma de Matriz para la ventana de abastecimiento
+	 * Solicita al repositorio una actualización de la base de datos con los productos enviados
 	 * 
-	 * @return matriz 
+	 * @param lista La lista de prodcutos con los cambios hechos por el usuario 
 	 */
-	public Object[][] recuperaMatriz() {
-		List <Producto> lista = new ArrayList<>();
-		
-		for(Producto pro:productoRepository.findAll()) {
-			lista.add(pro);
-		}
-		
-		Object[][] matriz = new Object[lista.size()][3];
-
-		// Convertir lista de productos a una matriz
-		for (int fila = 0; fila < lista.size(); fila++) {
-			matriz[fila][0] = lista.get(fila).getNombre();
-			matriz[fila][1] = lista.get(fila).getEnExistencia();
-			matriz[fila][2] = lista.get(fila).getPrecio();
-		}
-		
-		return matriz;
-	}
 	
-	/*
-	 * @param recibe la lista de prodcutos con los cambios hechos por el usuario desde la tabla 
-	 */
 	public void acualiza(List<Producto> lista) {
 		productoRepository.saveAll(lista);	
 	}

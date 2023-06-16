@@ -130,7 +130,7 @@ public class VentanaAbastecimiento extends JFrame {
 				/*
 				 * Los datos obtenidos de la tabla se almacenan en una matriz provicional
 				 */
-				Object[][] matrizDeCambios = new Object[ matriz.length][3];
+				Object[][] matrizDeCambios = new Object[matriz.length][3];
 				
 				for(int index = 0; index < matriz.length; index++) {
 					matrizDeCambios[index][0] = model.getValueAt(index, 0);
@@ -144,9 +144,14 @@ public class VentanaAbastecimiento extends JFrame {
 				for (int fila = 0; fila < matrizDeCambios.length; fila++) {
 					
 					try {
-						Integer.parseInt(matrizDeCambios[fila][1].toString());
+						validarValor(Integer.parseInt(matrizDeCambios[fila][1].toString()));
 					} catch (NumberFormatException error) { 
 						muestraDialogo("Datos erroneos, no se admiten números decimales en cantidad y tampoco letras.");
+						controlAbastecimiento.finalizaControlAbastecimiento();
+						return;
+						
+					} catch (RangoInvalidoException error) {
+						muestraDialogo("No se pueden almacenar más de 1000 productos.");
 						controlAbastecimiento.finalizaControlAbastecimiento();
 						return;
 					}
@@ -155,14 +160,6 @@ public class VentanaAbastecimiento extends JFrame {
 						Float.parseFloat(matrizDeCambios[fila][2].toString());
 					} catch (NumberFormatException error) { 
 						muestraDialogo("Datos erroneos, no se admiten letras en precio.");
-						controlAbastecimiento.finalizaControlAbastecimiento();
-						return;
-					}
-					
-					try {
-					    validarValor(Integer.parseInt(matrizDeCambios[fila][1].toString()));
-					} catch (RangoInvalidoException error) {
-						muestraDialogo("No se pueden almacenar más de 1000 productos.");
 						controlAbastecimiento.finalizaControlAbastecimiento();
 						return;
 					}

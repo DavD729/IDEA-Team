@@ -11,6 +11,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import mx.uam.ayd.proyecto.datos.CategoriaRepository;
 import mx.uam.ayd.proyecto.datos.HistorialVentaRepository;
+import mx.uam.ayd.proyecto.datos.Producto1Repository;
 import mx.uam.ayd.proyecto.datos.ProductoRepository;
 import mx.uam.ayd.proyecto.datos.PuestoRepository;
 import mx.uam.ayd.proyecto.datos.RegistroRepository;
@@ -19,6 +20,7 @@ import mx.uam.ayd.proyecto.datos.VentaRepository;
 import mx.uam.ayd.proyecto.negocio.modelo.Categoria;
 import mx.uam.ayd.proyecto.negocio.modelo.HistorialVenta;
 import mx.uam.ayd.proyecto.negocio.modelo.Producto;
+import mx.uam.ayd.proyecto.negocio.modelo.Producto1;
 import mx.uam.ayd.proyecto.negocio.modelo.Puesto;
 import mx.uam.ayd.proyecto.negocio.modelo.RelacionProductoValor;
 import mx.uam.ayd.proyecto.negocio.modelo.Registro;
@@ -36,6 +38,9 @@ public class TiendaAplicacion {
 	
 	@Autowired
 	ProductoRepository productoRepositorio;
+	
+	@Autowired
+	Producto1Repository producto1Repository;
 	
 	@Autowired
 	PuestoRepository puestoRepository;
@@ -200,5 +205,28 @@ public class TiendaAplicacion {
 		venta3.setTotal(78.62);
 		ventaRepository.save(venta3);
 		//Finaliza la inicialización de la BD para ventas
+		
+		Producto1 arroz = new Producto1("Arroz",1,30,35,"MenuOnline_iconos/arroz.jpg",true,"");
+		Producto1 crema = new Producto1("Crema",3,30,35,"MenuOnline_iconos/crema.jpg",true,"");
+		Producto1 galletas = new Producto1("galletas",2,60,70,"MenuOnline_iconos/galletas.png",true,"");
+		Producto1 galletasmaria = new Producto1("Galletas maria",2,65,75,"MenuOnline_iconos/gallMar.jpg",true,"");
+		Producto1 jugo = new Producto1("Jugo",4,50,65,"MenuOnline_iconos/jugo.png",true,"");
+		Producto1 powered = new Producto1("Powered",4,20,25,"MenuOnline_iconos/powered.png",true,"");
+		Producto1 queso = new Producto1("Queso",3,30,40,"MenuOnline_iconos/queso.jpg",true,"");
+		Producto1 cocaCola = new Producto1("Coca cola",4,20,30,"MenuOnline_iconos/cocaCola.jpg",true,"");
+		Producto1 leche = new Producto1("Leche",3,20,30,"MenuOnline_iconos/leche.png",true,"");
+
+		if(producto1Repository.findAll().isEmpty()){
+			producto1Repository.save(arroz);
+			producto1Repository.save(crema);
+			producto1Repository.save(galletas);
+			producto1Repository.save(galletasmaria);
+			producto1Repository.save(jugo);
+			producto1Repository.save(powered);
+			producto1Repository.save(queso);
+			producto1Repository.save(cocaCola);
+			producto1Repository.save(leche);
+		//Finaliza la inicialización de la BD para ventas
+		}
 	}
 }
