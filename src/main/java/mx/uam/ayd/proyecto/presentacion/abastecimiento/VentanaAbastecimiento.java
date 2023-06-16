@@ -64,7 +64,7 @@ public class VentanaAbastecimiento extends JFrame {
 
 			public boolean isCellEditable(int row, int column) {
 						
-				if(column == 0) {
+				if(column == 0 || column == 1) {
 					return false;
 				}else {
 					return true;
@@ -80,13 +80,9 @@ public class VentanaAbastecimiento extends JFrame {
 		table.setModel(new DefaultTableModel(new Object[0][0] , new String[] { "Productos", "Cantidad", "Precio", "Seleccionado"
 				
 		}));
+		
 		table.setEnabled(false);
 		scrollPane.setViewportView(table);
-		/*Object[][] matriz = control_vista.obtenMatriz();
-		
-	    table.setModel(new DefaultTableModel(matriz, new String[] { "Productos", "Cantidad", "Precio" }));
-		table.setEnabled(false);
-		scrollPane.setViewportView(table);*/
 		
 		JButton btnEditar = new JButton("Editar");
 		btnEditar.setFont(new Font("Arial", Font.PLAIN, 11));
@@ -134,18 +130,21 @@ public class VentanaAbastecimiento extends JFrame {
 				/*
 				 * Los datos obtenidos de la tabla se almacenan en una matriz provicional
 				 */
-				for (int fila = 0; fila < controlAbastecimiento.recuperaCantidadActual(); fila++) {
-					matriz[fila][1] = model.getValueAt(fila, 1);
-					matriz[fila][2]= model.getValueAt(fila, 2);
+				Object[][] matrizDeCambios = new Object[ matriz.length][3];
+				
+				for(int index = 0; index < matriz.length; index++) {
+					matrizDeCambios[index][0] = model.getValueAt(index, 0);
+					matrizDeCambios[index][1] = model.getValueAt(index, 2);
+					matrizDeCambios[index][2] = model.getValueAt(index, 3);
 				}
 				
 				/*
 				 * Se hacen excepciones por algun tipo de error de datos
 				 */
-				for (int fila = 0; fila < controlAbastecimiento.recuperaCantidadActual(); fila++) {
+				for (int fila = 0; fila < matrizDeCambios.length; fila++) {
 					
 					try {
-						Integer.parseInt(matriz[fila][1].toString());
+						Integer.parseInt(matrizDeCambios[fila][1].toString());
 					} catch (NumberFormatException error) { 
 						muestraDialogo("Datos erroneos, no se admiten números decimales en cantidad y tampoco letras.");
 						controlAbastecimiento.finalizaControlAbastecimiento();
@@ -153,7 +152,7 @@ public class VentanaAbastecimiento extends JFrame {
 					}
 					
 					try {
-						Float.parseFloat(matriz[fila][2].toString());
+						Float.parseFloat(matrizDeCambios[fila][2].toString());
 					} catch (NumberFormatException error) { 
 						muestraDialogo("Datos erroneos, no se admiten letras en precio.");
 						controlAbastecimiento.finalizaControlAbastecimiento();
@@ -161,7 +160,7 @@ public class VentanaAbastecimiento extends JFrame {
 					}
 					
 					try {
-					    validarValor(Integer.parseInt(matriz[fila][1].toString()));
+					    validarValor(Integer.parseInt(matrizDeCambios[fila][1].toString()));
 					} catch (RangoInvalidoException error) {
 						muestraDialogo("No se pueden almacenar más de 1000 productos.");
 						controlAbastecimiento.finalizaControlAbastecimiento();
@@ -172,12 +171,15 @@ public class VentanaAbastecimiento extends JFrame {
 					 * Devuelve la lista para almacenar los datos
 					 */
 					List <Producto> lista = new ArrayList<Producto>();
+					
 					/*
 					 * Llena los datos de la lista de la matriz de objetos provisional
 					 */
-					for (int fila1 = 0; fila1 < matriz.length; fila1++) {
-					    Producto product = new Producto(matriz[fila1][0].toString(),Float.parseFloat(matriz[fila1][2].toString()),Integer.parseInt(matriz[fila1][1].toString()));
-					    lista.add(product);
+					for (int index = 0; index < matrizDeCambios.length; index++) {
+						Producto productoActualizado = controlAbastecimiento.recuperaProducto(Long.parseLong(matrizDeCambios[index][0].toString())).get();
+						productoActualizado.setEnExistencia(Integer.parseInt(matrizDeCambios[index][1].toString()));
+						productoActualizado.setPrecio(Float.parseFloat(matrizDeCambios[index][2].toString()));
+					    lista.add(productoActualizado);
 					}
 					
 					controlAbastecimiento.actualizaProductos(lista);
@@ -274,29 +276,43 @@ public class VentanaAbastecimiento extends JFrame {
 	 * Llama un metodo de Servicio para llenar los datos de la tabla
 	 */
 	private void poblateData() {
-		this.matriz = controlAbastecimiento.obtenMatriz();
+		Object[][] matrizDeDatos = controlAbastecimiento.obtenMatriz();
 		
-		model = new DefaultTableModel(matriz, new String[] { "Productos", "Cantidad", "Precio", "Seleccionado" }){
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                // La columna "Seleccionado" utiliza JCheckBox como clase de columna
-                if (columnIndex == 3) {
-                    return Boolean.class;
-                }
-                return super.getColumnClass(columnIndex);
-            }
-        };
+		this.matriz = new Object[matrizDeDatos.length][4];
 		
-	    table.setModel(model);
+		for(int index = 0; index < matrizDeDatos.length; index++) {
+			matriz[index][0] = matrizDeDatos[index][0];
+			matriz[index][1] = matrizDeDatos[index][1];
+			matriz[index][2] = matrizDeDatos[index][2];
+			matriz[index][3] = matrizDeDatos[index][4];
+		}
+		
+		model = new DefaultTableModel(matriz, new String[] { "ID", "Productos", "Cantidad", "Precio", "Seleccionado" }){
+			@Override
+			public Class<?> getColumnClass(int columnIndex) {
+				// La columna "Seleccionado" utiliza JCheckBox como clase de columna
+				if (columnIndex == 4) {
+					return Boolean.class;
+				}
+				return super.getColumnClass(columnIndex);
+			}
+		};
+		
+		
+		table.setModel(model);
 		table.setEnabled(false);
+		
+		table.getColumnModel().getColumn(0).setPreferredWidth(4);
+		table.getColumnModel().getColumn(4).setPreferredWidth(6);
+		
 		scrollPane.setViewportView(table);
 		
 		table.getModel().addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                if (e.getColumn() == 3) {
+                if (e.getColumn() == 4) {
                     int row = e.getFirstRow();
-                    boolean selected = (Boolean) table.getValueAt(row, 3);
+                    boolean selected = (Boolean) table.getValueAt(row, 4);
                     /*
                      *  Aquí puedes realizar alguna acción basada en el estado del JCheckBox
                      */

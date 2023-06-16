@@ -2,6 +2,7 @@ package mx.uam.ayd.proyecto.negocio;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -105,11 +106,13 @@ public class ServicioProducto {
 		return productoRepository.findByNombre(nombre);
 	}
 	
+	public Optional<Producto> buscaProducto(long id) {
+		return productoRepository.findById(id);
+	}
+	
 	/**
 	 * Ian - Integration
 	 */
-	
-	private int numeroProductos;
 	
 	/**
 	 * Devuelve los datos de los productos registrados actuales en forma de Matriz para la ventana de abastecimiento
@@ -122,8 +125,6 @@ public class ServicioProducto {
 		for(Producto pro:productoRepository.findAll()) {
 			lista.add(pro);
 		}
-		
-		this.setNumeroProductos(lista.size());
 		
 		Object[][] matriz = new Object[lista.size()][3];
 
@@ -141,21 +142,6 @@ public class ServicioProducto {
 	 * @param recibe la lista de prodcutos con los cambios hechos por el usuario desde la tabla 
 	 */
 	public void acualiza(List<Producto> lista) {
-		productoRepository.deleteAll();
 		productoRepository.saveAll(lista);	
-	}
-	
-	/*
-	 * @return entero que maneja la cantidad de productos en la base de datos
-	 */
-	public int getNumeroProductos() {
-		return numeroProductos;
-	}
-	
-	/*
-	 * @param actualiza la cantidad de los productos en existencia
-	 */
-	public void setNumeroProductos(int numeroProductos) {
-		this.numeroProductos = numeroProductos;
 	}
 }

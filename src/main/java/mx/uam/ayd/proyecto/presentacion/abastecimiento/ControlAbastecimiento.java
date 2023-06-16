@@ -1,6 +1,7 @@
 package mx.uam.ayd.proyecto.presentacion.abastecimiento;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,17 +27,14 @@ public class ControlAbastecimiento {
 	}
 	
 	/*
-	 * REcupera la cantidad de productos en existencia
-	 */
-	public int recuperaCantidadActual() {
-		return servicioProducto.getNumeroProductos();
-	}
-	
-	/*
 	 * Recupera los productos de la base de datos
 	 */
 	public Object[][] obtenMatriz() {
-		return servicioProducto.recuperaMatriz();
+		return servicioProducto.recuperaTablaDeProductos();
+	}
+	
+	public Optional<Producto> recuperaProducto(long id) {
+		return servicioProducto.buscaProducto(id);
 	}
 	
 	/*
